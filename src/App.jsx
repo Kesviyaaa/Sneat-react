@@ -1,24 +1,39 @@
 import Navbar from "./components/Navbar";
-import Sidebar from "./components/Sidebar";
-import Footer from "./components/Footer";
+import { useState, useEffect } from "react";
+
 
 function App() {
+  const [theme, setTheme] = useState("light"); // light | dark | system
+  useEffect(() => {
+    const root = document.documentElement;
+
+    const applyTheme = (mode) => {
+      root.classList.remove("light-style", "dark-style");
+
+      if (mode === "dark") {
+        root.classList.add("dark-style");
+      } else if (mode === "light") {
+        root.classList.add("light-style");
+      } else {
+        // system
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        root.classList.add(prefersDark ? "dark-style" : "light-style");
+      }
+    };
+
+    applyTheme(theme);
+  }, [theme]);
   return (
-    <div className="layout-wrapper layout-content-navbar layout-menu-collapsed">
+    <div className="layout-wrapper layout-content-navbar">
       <div className="layout-container">
-
-        <Sidebar />
-
         <div className="layout-page">
-          <Navbar />
+          <Navbar  onThemeChange={setTheme} />
 
           <div className="content-wrapper">
-            <div className="container-xxl flex-grow-1 container-p-y">
-            </div>
-
-            <Footer />
+            {/* your page */}
           </div>
-
         </div>
       </div>
     </div>
