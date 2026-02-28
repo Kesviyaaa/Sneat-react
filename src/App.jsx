@@ -1,38 +1,29 @@
+// App.jsx
+import React from "react";
 import Navbar from "./components/Navbar";
-import { useState, useEffect } from "react";
-
+import Sidebar from "./components/Sidebar";
 
 function App() {
-  const [theme, setTheme] = useState("light"); // light | dark | system
-  useEffect(() => {
-    const root = document.documentElement;
-
-    const applyTheme = (mode) => {
-      root.classList.remove("light-style", "dark-style");
-
-      if (mode === "dark") {
-        root.classList.add("dark-style");
-      } else if (mode === "light") {
-        root.classList.add("light-style");
-      } else {
-        // system
-        const prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)"
-        ).matches;
-        root.classList.add(prefersDark ? "dark-style" : "light-style");
-      }
-    };
-
-    applyTheme(theme);
-  }, [theme]);
   return (
     <div className="layout-wrapper layout-content-navbar">
       <div className="layout-container">
-        <div className="layout-page">
-          <Navbar  onThemeChange={setTheme} />
+        
+        {/* Sidebar */}
+        <Sidebar />
 
+        {/* Main page content */}
+        <div className="layout-page">
+          {/* Navbar */}
+          <Navbar />
+
+          {/* Page content */}
           <div className="content-wrapper">
-            {/* your page */}
+            <div className="container-xxl flex-grow-1 container-p-y">
+              <h1>Welcome to your Dashboard</h1>
+              {/* Add your page components here */}
+            </div>
+
+            
           </div>
         </div>
       </div>

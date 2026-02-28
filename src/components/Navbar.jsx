@@ -2,171 +2,165 @@ import React, { useState, useRef, useEffect } from "react";
 
 
 const Navbar = () => {
-  // State for search input
   const [searchQuery, setSearchQuery] = useState("");
-
-
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef(null);
-
   const [themeOpen, setThemeOpen] = useState(false);
   const themeRef = useRef(null);
 
-useEffect(() => {
-  const handleClickOutside = (e) => {
-    if (langRef.current && !langRef.current.contains(e.target)) {
-      setLangOpen(false);
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (langRef.current && !langRef.current.contains(e.target)) {
+        setLangOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (themeRef.current && !themeRef.current.contains(e.target)) {
+        setThemeOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Function to change theme
+  const handleThemeChange = (theme) => {
+    const body = document.body;
+    body.classList.remove("theme-light", "theme-dark", "theme-system");
+    if (theme === "system") {
+      body.classList.add("theme-system");
+    } else if (theme === "light") {
+      body.classList.add("theme-light");
+    } else {
+      body.classList.add("theme-dark");
     }
   };
-
-  document.addEventListener("mousedown", handleClickOutside);
-  return () => document.removeEventListener("mousedown", handleClickOutside);
-}, []);
-
-useEffect(() => {
-  const handleClickOutside = (e) => {
-    if (themeRef.current && !themeRef.current.contains(e.target)) {
-      setThemeOpen(false);
-    }
-  };
-
-  document.addEventListener("mousedown", handleClickOutside);
-  return () => document.removeEventListener("mousedown", handleClickOutside);
-}, []);
 
   return (
-    
-<nav class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
-  
-
-
-
-
-  <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0   d-xl-none ">
-    <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
-      <i class="icon-base bx bx-menu icon-md"></i>
-    </a>
-  </div>
-
-
-<div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
-  
-<div className="navbar-nav align-items-center">
-  <div className="nav-item navbar-search-wrapper mb-0">
-
-    <a
-      className="nav-item nav-link search-toggler d-flex align-items-center px-0"
-      href="#"
+    <nav
+      className="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme"
+      id="layout-navbar"
     >
-      {/* Search icon */}
-      <i className="bx bx-search bx-sm text-muted"></i>
+      {/* Left menu toggle */}
+      <div className="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
+        <a className="nav-item nav-link px-0 me-xl-6" href="#">
+          <i className="icon-base bx bx-menu icon-md"></i>
+        </a>
+      </div>
 
-      {/* Text + shortcut */}
-      <span className="d-none d-md-inline-block text-muted ms-2">
-        Search [Ctrl+K]
-      </span>
-    </a>
-
-  </div>
-</div>
-
-  
-  
-
-  
-
-  <ul class="navbar-nav flex-row align-items-center ms-md-auto">
-    
-
-      
-  <li
-  className={`nav-item dropdown-language dropdown me-2 me-xl-0 ${
-    langOpen ? "show" : ""
-  }`}
-  ref={langRef}
->
-  <a
-    className="nav-link dropdown-toggle hide-arrow"
-    href="#"
-    onClick={(e) => {
-      e.preventDefault();
-      setLangOpen(!langOpen);
-    }}
-  >
-    <i className="icon-base bx bx-globe icon-md"></i>
-  </a>
-
-  <ul
-    className={`dropdown-menu dropdown-menu-end ${
-      langOpen ? "show" : ""
-    }`}
-  >
-    <li>
-      <button className="dropdown-item">English</button>
-    </li>
-    <li>
-      <button className="dropdown-item">French</button>
-    </li>
-    <li>
-      <button className="dropdown-item">Arabic</button>
-    </li>
-    <li>
-      <button className="dropdown-item">German</button>
-    </li>
-  </ul>
-</li>
-
-      
-<li
-  className={`nav-item dropdown-style-switcher dropdown me-2 me-xl-0 ${
-    themeOpen ? "show" : ""
-  }`}
-  ref={themeRef}
->
-  <a
-    className="nav-link dropdown-toggle hide-arrow"
-    href="#"
-    onClick={(e) => {
-      e.preventDefault();
-      setThemeOpen(!themeOpen);
-    }}
-  >
-    <i className="bx bx-sun bx-sm"></i>
-  </a>
-
-  <ul
-    className={`dropdown-menu dropdown-menu-end ${
-      themeOpen ? "show" : ""
-    }`}
-  >
-    <li>
-      <button
-        className="dropdown-item"
-        onClick={() => props.onThemeChange("light")}
+      {/* Navbar right */}
+      <div
+        className="navbar-nav-right d-flex align-items-center justify-content-end"
+        id="navbar-collapse"
       >
-        ☀️ Light
-      </button>
-    </li>
+        {/* Search */}
+        <div className="navbar-nav align-items-center">
+          <div className="nav-item navbar-search-wrapper mb-0">
+            <a
+              className="nav-item nav-link search-toggler d-flex align-items-center px-0"
+              href="#"
+            >
+              <i className="bx bx-search bx-sm text-muted"></i>
+              <span className="d-none d-md-inline-block text-muted ms-2">
+                Search [Ctrl+K]
+              </span>
+            </a>
+          </div>
+        </div>
 
-    <li>
-      <button
-        className="dropdown-item"
-        onClick={() => props.onThemeChange("dark")}
-      >
-        🌙 Dark
-      </button>
-    </li>
+        <ul className="navbar-nav flex-row align-items-center ms-md-auto">
+          {/* Language dropdown */}
+          <li
+            className={`nav-item dropdown-language dropdown me-2 me-xl-0 ${
+              langOpen ? "show" : ""
+            }`}
+            ref={langRef}
+          >
+            <a
+              className="nav-link dropdown-toggle hide-arrow"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setLangOpen(!langOpen);
+              }}
+            >
+              <i className="icon-base bx bx-globe icon-md"></i>
+            </a>
+            <ul
+              className={`dropdown-menu dropdown-menu-end ${
+                langOpen ? "show" : ""
+              }`}
+            >
+              <li>
+                <button className="dropdown-item">English</button>
+              </li>
+              <li>
+                <button className="dropdown-item">French</button>
+              </li>
+              <li>
+                <button className="dropdown-item">Arabic</button>
+              </li>
+              <li>
+                <button className="dropdown-item">German</button>
+              </li>
+            </ul>
+          </li>
 
-    <li>
-      <button
-        className="dropdown-item"
-        onClick={() => props.onThemeChange("system")}
-      >
-        💻 System
-      </button>
-    </li>
-  </ul>
-</li>
+          {/* Theme switcher */}
+          <li
+            className={`nav-item dropdown-style-switcher dropdown me-2 me-xl-0 ${
+              themeOpen ? "show" : ""
+            }`}
+            ref={themeRef}
+          >
+            <a
+              className="nav-link dropdown-toggle hide-arrow"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setThemeOpen(!themeOpen);
+              }}
+            >
+              <i className="bx bx-sun bx-sm"></i>
+            </a>
+            <ul
+              className={`dropdown-menu dropdown-menu-end ${
+                themeOpen ? "show" : ""
+              }`}
+            >
+              <li>
+                <button
+                  className="dropdown-item"
+                  onClick={() => handleThemeChange("light")}
+                >
+                  ☀️ Light
+                </button>
+              </li>
+              <li>
+                <button
+                  className="dropdown-item"
+                  onClick={() => handleThemeChange("dark")}
+                >
+                  🌙 Dark
+                </button>
+              </li>
+              <li>
+                <button
+                  className="dropdown-item"
+                  onClick={() => handleThemeChange("system")}
+                >
+                  💻 System
+                </button>
+              </li>
+            </ul>
+          </li>
       
 
       <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
