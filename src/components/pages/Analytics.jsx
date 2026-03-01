@@ -1,6 +1,99 @@
 import React from "react";
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+import RevenueChart from "../charts/RevenueChart";
+import ProfileReportChart from "../charts/ProfileReportChart";
+
+import { Bar, Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const Analytics = () => {
+  // Example for Order Chart (mini bar)
+const orderData = {
+  labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  datasets: [
+    {
+      label: "Orders",
+      data: [120, 200, 150, 80, 70, 110, 130],
+      backgroundColor: "#696cff",
+      borderRadius: 4,
+      barThickness: 10,
+    },
+  ],
+};
+
+const orderOptions = {
+  responsive: true,
+  plugins: { legend: { display: false } },
+  scales: {
+    x: { grid: { display: false }, ticks: { display: false } },
+    y: { grid: { display: false }, ticks: { display: false } },
+  },
+};
+
+// Example for Total Revenue (line chart)
+const totalRevenueData = {
+  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  datasets: [
+    {
+      label: "Revenue",
+      data: [3200, 4500, 3800, 5000, 4800, 6000],
+      borderColor: "#696cff",
+      backgroundColor: "rgba(105,108,255,0.2)",
+      fill: true,
+      tension: 0.4, // smooth line
+    },
+  ],
+};
+
+const totalRevenueOptions = {
+  responsive: true,
+  plugins: { legend: { display: false } },
+  scales: {
+    x: { grid: { display: false } },
+    y: { beginAtZero: true, grid: { color: "#f5f7fa" } },
+  },
+};
+
+// Revenue mini chart
+const revenueData = {
+  labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  datasets: [
+    {
+      label: "Revenue",
+      data: [400, 300, 500, 700, 600, 800, 750],
+      backgroundColor: "#03c3ec",
+      borderRadius: 4,
+      barThickness: 10,
+    },
+  ],
+};
+
+const revenueOptions = {
+  responsive: true,
+  plugins: { legend: { display: false } },
+  scales: { x: { display: false }, y: { display: false } },
+};
   return (
 
   <div className="container-xxl flex-grow-1 container-p-y">
@@ -28,14 +121,16 @@ const Analytics = () => {
     <div className="col-xxl-4 col-lg-12 col-md-4 order-1">
       <div className="row">
         <div className="col-lg-6 col-md-12 col-6 mb-6">
-          <div className="card h-100">
-            <div className="card-body pb-4">
-              <span className="d-block fw-medium mb-1">Order</span>
-              <h4 className="card-title mb-0">276k</h4>
-            </div>
-            <div id="orderChart" className="pb-3 pe-1"></div>
-          </div>
-        </div>
+  <div className="card h-100">
+    <div className="card-body pb-4">
+      <span className="d-block fw-medium mb-1">Order</span>
+      <h4 className="card-title mb-0">276k</h4>
+    </div>
+    <div className="pb-3 pe-1">
+      <Bar data={orderData} options={orderOptions} />
+    </div>
+  </div>
+</div>
         <div className="col-lg-6 col-md-12 col-6 mb-6">
           <div className="card h-100">
             <div className="card-body">
@@ -88,9 +183,7 @@ const Analytics = () => {
               <div className="text-center mb-6">
                 <div className="btn-group">
                   <button type="button" className="btn btn-label-primary">
-                    <script>
-                      document.write(new Date().getFullYear() - 1);
-                    </script>
+                  <small>{new Date().getFullYear() - 1}</small>
                   </button>
                   <button type="button" className="btn btn-label-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                     <span className="visually-hidden">Toggle Dropdown</span>
@@ -112,11 +205,9 @@ const Analytics = () => {
                     <span className="avatar-initial rounded-2 bg-label-primary"><i className="icon-base bx bx-dollar icon-lg text-primary"></i></span>
                   </div>
                   <div className="d-flex flex-column">
-                    <small>
-                      <script>
-                        document.write(new Date().getFullYear() - 1);
-                      </script>
-                    </small>
+                    
+                    <small>{new Date().getFullYear() - 1}</small>
+                    
                     <h6 className="mb-0">$32.5k</h6>
                   </div>
                 </div>
@@ -170,7 +261,7 @@ const Analytics = () => {
             <div className="card-body pb-0">
               <span className="d-block fw-medium mb-1">Revenue</span>
               <h4 className="card-title mb-0 mb-lg-4">425k</h4>
-              <div id="revenueChart"></div>
+              <RevenueChart />
             </div>
           </div>
         </div>
@@ -184,11 +275,13 @@ const Analytics = () => {
                     <span className="badge bg-label-warning">YEAR 2022</span>
                   </div>
                   <div className="mt-sm-auto">
-                    <span className="text-success text-nowrap fw-medium"><i className="icon-base bx bx-up-arrow-alt"></i> 68.2%</span>
+                    <span className="text-success text-nowrap fw-medium">
+                      <i className="icon-base bx bx-up-arrow-alt"></i> 68.2%
+                    </span>
                     <h4 className="mb-0">$84,686k</h4>
                   </div>
                 </div>
-                <div id="profileReportChart"></div>
+                <ProfileReportChart />
               </div>
             </div>
           </div>
@@ -947,10 +1040,7 @@ const Analytics = () => {
     </div>
     {/*/ pill table */}
   </div>
-
         </div>
-        
-
 );
 };
 
