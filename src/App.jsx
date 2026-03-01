@@ -1,36 +1,53 @@
+import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+
 import Navbar from "./components/pages/Navbar";
 import Sidebar from "./components/pages/Sidebar";
 import Footer from "./components/pages/Footer";
-import { useState } from "react";
+
+// Pages
+import Analytics from "./components/pages/Analytics";
+// import other pages later: Dashboard, CRM, etc.
 
 function App() {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-        <div
-          className={`layout-wrapper layout-content-navbar ${
+    <Router>
+      <div
+        className={`layout-wrapper layout-content-navbar ${
           collapsed ? "layout-menu-collapsed" : ""
         }`}
->      <div className="layout-container">
+      >
+        <div className="layout-container">
+          {/* Sidebar */}
+          <Sidebar
+            collapsed={collapsed}
+            toggleSidebar={() => setCollapsed(!collapsed)}
+          />
 
-        {/* Sidebar goes here */}
-        <Sidebar collapsed={collapsed} toggleSidebar={() => setCollapsed(!collapsed)} />
-        {/* Main page */}
-        <div className="layout-page">
-          <Navbar />
+          {/* Main page */}
+          <div className="layout-page">
+            <Navbar />
 
-          {/* Content wrapper */}
-          <div className="content-wrapper">
-            <div className="container-xxl flex-grow-1 container-p-y">
-              {/* Your page content goes here */}
+            {/* Content wrapper */}
+            <div className="content-wrapper">
+              <div className="container-xxl flex-grow-1 container-p-y">
+                <Routes>
+                  {/* Redirect "/" to analytics page */}
+                  <Route path="/" element={<Navigate to="/analytics" />} />
+                  <Route path="/analytics" element={<Analytics />} />
+                  {/* Add more routes as needed */}
+                </Routes>
+              </div>
+
+              {/* Footer */}
+              <Footer />
             </div>
-
-            {/* Footer */}
-            <Footer />
           </div>
         </div>
       </div>
-    </div>
+    </Router>
   );
 }
 

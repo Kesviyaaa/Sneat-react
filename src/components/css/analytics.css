@@ -1,0 +1,30 @@
+/* analytics.css */
+
+/* Fix card titles spacing */
+.analytics-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  
+  /* Center chart containers */
+  .chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 150px;
+  }
+  
+  /* Add a border highlight to revenue cards */
+  .card.revenue-card {
+    border: 1px solid var(--bs-primary);
+  }
+  
+  /* Responsive table fix */
+  .table-responsive {
+    overflow-x: auto;
+  }
+  
+  /* Progress bar rounded ends */
+  .progress-bar {
+    border-radius: .25rem;
+  }

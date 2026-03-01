@@ -2,8 +2,7 @@ import React from "react";
 import logo from "../../assets/logo.png";
 import "../css/sidebar.css";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useLocation } from "react-router-dom";
 
 const Sidebar = ({ collapsed, toggleSidebar }) => {
   const [hovered, setHovered] = useState(false);
@@ -78,13 +77,14 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
 >
             <i className="menu-icon icon-base bx bx-home-smile text-decoration-none"></i>
             <div className="menu-text">Dashboards</div>
-          <div class="badge text-bg-danger rounded-pill ms-auto">5</div>          </a>
+          <div className="badge text-bg-danger rounded-pill ms-auto">5</div>          </a>
           <ul className="menu-sub">
-            <li className="menu-item">
-              <a href="dashboards-analytics.html" className="menu-link text-decoration-none">
-                <div className="menu-text">Analytics</div>
-              </a>
-            </li>
+          <li className="menu-item">
+            <Link to="/analytics" className="menu-link text-decoration-none">
+              <i ></i>
+              <div className="menu-text">Analytics</div>
+            </Link>
+          </li>
             <li className="menu-item">
               <a href="dashboards-crm.html" className="menu-link text-decoration-none">
                 <div className="menu-text">CRM</div>
@@ -1024,11 +1024,12 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
               <div className="menu-text">Statistics</div>
             </a>
           </li>
-          <li className="menu-item">
-            <a href="cards-analytics.html" className="menu-link text-decoration-none">
-              <div className="menu-text">Analytics</div>
-            </a>
-          </li>
+          <li className={`menu-item ${location.pathname === "/analytics" ? "active" : ""}`}>
+        <Link to="/analytics" className="menu-link text-decoration-none">
+          <i className="menu-icon icon-base bx bx-home-smile"></i>
+          <div className="menu-text">Analytics</div>
+        </Link>
+      </li>
           <li className="menu-item">
             <a href="cards-gamifications.html" className="menu-link text-decoration-none">
               <div className="menu-text">Gamifications</div>
