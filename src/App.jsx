@@ -14,8 +14,7 @@ function App() {
 >      <div className="layout-container">
 
         {/* Sidebar goes here */}
-        <Sidebar toggleSidebar={() => setCollapsed(!collapsed)} />
-
+        <Sidebar collapsed={collapsed} toggleSidebar={() => setCollapsed(!collapsed)} />
         {/* Main page */}
         <div className="layout-page">
           <Navbar />

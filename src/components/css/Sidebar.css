@@ -1,4 +1,15 @@
 /* 🔹 base submenu hidden */
+/* sidebar.css */
+
+/* Target by class 'app-brand-text' */
+.app-brand-text {
+  color: black; /* sets text color to black */
+}
+/* Only for sidebar */
+.layout-menu .app-brand-text {
+  color: black;
+}
+
 .menu-sub {
     max-height: 0;
     overflow: hidden;
@@ -14,3 +25,22 @@
   .menu-link {
     cursor: pointer;
   }
+
+  .logo-img {
+    padding-left: 100px;
+  }
+
+  .layout-menu {
+    width: 250px; /* normal width */
+    transition: width 0.3s ease; /* smooth expansion */
+  }
+  
+  .layout-menu.layout-menu-collapsed {
+    width: 80px; /* collapsed width */
+  }
+  
+  .layout-menu.hovered {
+    width: 250px; /* expand on hover */
+  }
+
+  

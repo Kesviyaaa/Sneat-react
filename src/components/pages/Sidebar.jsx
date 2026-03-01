@@ -2,29 +2,48 @@ import React from "react";
 import logo from "../../assets/logo.png";
 import "../css/sidebar.css";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
-const Sidebar = ({ toggleSidebar }) => {
-  const toggleMenu = (e) => {
-    e.preventDefault();
-    const parent = e.currentTarget.closest(".menu-item");
-    parent.classList.toggle("open");
+
+const Sidebar = ({ collapsed, toggleSidebar }) => {
+  const [hovered, setHovered] = useState(false);
+
+  // Hover to expand
+  const handleMouseEnter = () => {
+    if (collapsed) setHovered(true);
   };
+
+  const handleMouseLeave = () => {
+    if (collapsed) setHovered(false);
+  };
+
   const [openMenu, setOpenMenu] = useState(null);
   const [openSubMenu, setOpenSubMenu] = useState(null);
   const [openSubSubMenu, setOpenSubSubMenu] = useState(null);
 
-  
-  
   return (
-    <aside id="layout-menu" className="layout-menu menu-vertical menu">
-      {/* App Brand / Logo */}
+    <aside
+      id="layout-menu"
+      className={`layout-menu menu-vertical menu ${
+        collapsed ? "layout-menu-collapsed" : ""
+      } ${hovered ? "hovered" : ""}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >    {/* App Brand / Logo */}
       <div className="app-brand demo">
         <a href="index.html" className="app-brand-link text-decoration-none"> 
           <span className="app-brand-logo demo">
             <span className="text-primary">
               {/* SVG Logo */}
               <span className="app-brand-logo demo">
-              <img src={logo} alt="Sneat logo" height="90" width="80" /></span>
+              <img 
+                src={logo} 
+                alt="Sneat logo" 
+                height="90" 
+                width="80" 
+                style={{ paddingLeft: '5px' }}
+              />
+              </span>
             </span>
           </span>
           <span className="app-brand-text demo menu-text fw-bold ms-2">Sneat</span>
@@ -59,8 +78,7 @@ const Sidebar = ({ toggleSidebar }) => {
 >
             <i className="menu-icon icon-base bx bx-home-smile text-decoration-none"></i>
             <div className="menu-text">Dashboards</div>
-            <div className="badge text-bg-danger rounded-pill ms-auto px-3 py-2 fs-6">5</div>
-          </a>
+          <div class="badge text-bg-danger rounded-pill ms-auto">5</div>          </a>
           <ul className="menu-sub">
             <li className="menu-item">
               <a href="dashboards-analytics.html" className="menu-link text-decoration-none">

@@ -88,3 +88,29 @@ a.menu-link {
 .layout-menu-collapsed .layout-menu:hover ~ .layout-page {
   margin-left: 260px;
 }
+
+/* sidebar.css */
+
+/* Collapsed state */
+.layout-menu-collapsed {
+  width: 70px; /* only icons visible */
+  transition: width 0.3s ease; /* smooth shrink/expand */
+  overflow: hidden;
+}
+
+/* Hovered state expands */
+.layout-menu.hovered {
+  width: 250px; /* full sidebar width */
+  transition: width 0.3s ease;
+}
+
+/* Submenu sliding */
+.menu-sub {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.menu-item.open > .menu-sub {
+  max-height: 500px; /* adjust for number of items */
+}
