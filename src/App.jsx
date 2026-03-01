@@ -1,29 +1,33 @@
-// App.jsx
-import React from "react";
-import Navbar from "./components/Navbar";
-import Sidebar from "./components/Sidebar";
+import Navbar from "./components/pages/Navbar";
+import Sidebar from "./components/pages/Sidebar";
+import Footer from "./components/pages/Footer";
+import { useState } from "react";
 
 function App() {
-  return (
-    <div className="layout-wrapper layout-content-navbar">
-      <div className="layout-container">
-        
-        {/* Sidebar */}
-        <Sidebar />
+  const [collapsed, setCollapsed] = useState(false);
 
-        {/* Main page content */}
+  return (
+        <div
+          className={`layout-wrapper layout-content-navbar ${
+          collapsed ? "layout-menu-collapsed" : ""
+        }`}
+>      <div className="layout-container">
+
+        {/* Sidebar goes here */}
+        <Sidebar toggleSidebar={() => setCollapsed(!collapsed)} />
+
+        {/* Main page */}
         <div className="layout-page">
-          {/* Navbar */}
           <Navbar />
 
-          {/* Page content */}
+          {/* Content wrapper */}
           <div className="content-wrapper">
             <div className="container-xxl flex-grow-1 container-p-y">
-              <h1>Welcome to your Dashboard</h1>
-              {/* Add your page components here */}
+              {/* Your page content goes here */}
             </div>
 
-            
+            {/* Footer */}
+            <Footer />
           </div>
         </div>
       </div>

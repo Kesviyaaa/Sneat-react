@@ -7,7 +7,7 @@ const Footer = () => {
           <div className="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
             
             <div className="mb-2 mb-md-0">
-              © {year}, made with ❤️ by{" "}
+              © {new Date().getFullYear()}, made with ❤️ by{" "}
               <a
                 href="https://themeselection.com"
                 target="_blank"

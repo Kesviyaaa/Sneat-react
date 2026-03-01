@@ -1,0 +1,16 @@
+/* 🔹 base submenu hidden */
+.menu-sub {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+  
+  /* 🔹 when open */
+  .menu-item.open > .menu-sub {
+    max-height: 500px; /* enough for content */
+  }
+  
+  /* optional smoother feel */
+  .menu-link {
+    cursor: pointer;
+  }

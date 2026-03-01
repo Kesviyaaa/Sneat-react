@@ -5,6 +5,23 @@
   text-align: center;
 }
 
+.menu-sub {
+  display: block;
+  overflow: hidden;
+  transition: height 0.25s ease;
+}
+
+.menu-item:not(.open) > .menu-sub {
+  height: 0;
+}
+
+.menu-item.open > .menu-sub {
+  height: auto;
+}
+a.menu-link {
+  text-decoration: none !important;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -49,4 +66,25 @@
 .dropdown-menu .dropdown-item.active {
   background-color: rgba(105, 108, 255, 0.16);
   color: #696cff;
+}
+
+.menu-text {
+  text-decoration: none !important;
+}
+#layout-menu .menu-text {
+  text-decoration: none !important;
+}
+
+/* Hover expand sidebar */
+.layout-menu-collapsed .layout-menu:hover {
+  width: 260px !important;
+}
+
+.layout-menu-collapsed .layout-menu:hover .menu-text {
+  opacity: 1;
+  visibility: visible;
+}
+
+.layout-menu-collapsed .layout-menu:hover ~ .layout-page {
+  margin-left: 260px;
 }

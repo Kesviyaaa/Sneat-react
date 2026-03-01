@@ -12,6 +12,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.menu-text {
+  text-decoration: none !important;
+}
+#layout-menu .menu-text {
+  text-decoration: none !important;
+}
 
 a {
   font-weight: 500;
