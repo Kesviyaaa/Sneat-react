@@ -15,11 +15,31 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-    <script src="/assets/vendor/js/menu.js"></script>
-    <script src="/assets/vendor/js/bootstrap.js"></script> 
-    <script src="/assets/vendor/js/helpers.js"></script>
-    <script src="/assets/js/config.js"></script>
-    <script src="/assets/js/main.js"></script>
+    <!-- <script src="/assets/vendor/js/menu.js"></script>
+    <script src="/assets/vendor/js/bootstrap.js"></script>  -->
+    <script>
+      window.templateName = "sneat";
+    
+      window.config = {
+        templateName: "sneat",
+        templateConfig: {
+          settings: {
+            theme: "light",
+            layout: "vertical",
+            layoutCollapsed: false,
+            layoutNavbarFixed: true,
+            layoutFooterFixed: false
+          }
+        },
+        colors: {},
+        assetsPath: "/assets/"
+      };
+    
+      window.Helpers = window.Helpers || {};
+    </script>
+    <!-- <script src="/assets/vendor/js/helpers.js"></script>
+    <script src="/assets/js/main.js"></script> -->
+    
     
 
   </body>

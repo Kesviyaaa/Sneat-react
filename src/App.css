@@ -4,6 +4,15 @@
   padding: 2rem;
   text-align: center;
 }
+/* advanced search spacing */
+.dt_adv_search .form-control {
+  height: 38px;
+}
+
+/* table spacing like Sneat */
+.dt-advanced-search thead th {
+  white-space: nowrap;
+}
 
 .menu-sub {
   display: block;

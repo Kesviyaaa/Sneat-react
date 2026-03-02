@@ -1434,8 +1434,8 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
             </a>
           </li>
           <li className="menu-item">
-            <a href="tables-datatables-advanced.html" className="menu-link text-decoration-none">
-              <div className="menu-text">Advanced</div>
+            <a href="/tables-datatables-advanced" className="menu-link text-decoration-none">
+              <div>Advanced</div>
             </a>
           </li>
           <li className="menu-item">

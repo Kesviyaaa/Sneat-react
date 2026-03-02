@@ -2,10 +2,10 @@ import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-
-import Navbar from "./components/pages/Navbar";
+import "./App.css";import Navbar from "./components/pages/Navbar";
 import Sidebar from "./components/pages/Sidebar";
 import Footer from "./components/pages/Footer";
+import DataTablesAdvanced from "./components/pages/DataTablesAdvanced";
 
 // Pages
 import Analytics from "./components/pages/Analytics";
@@ -39,6 +39,7 @@ function App() {
                   {/* Redirect "/" to analytics page */}
                   <Route path="/" element={<Navigate to="/analytics" />} />
                   <Route path="/analytics" element={<Analytics />} />
+                  <Route path="/tables-datatables-advanced" element={<DataTablesAdvanced />} />
                   {/* Add more routes as needed */}
                 </Routes>
               </div>
