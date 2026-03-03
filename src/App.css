@@ -1,35 +1,32 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-/* advanced search spacing */
+/* ================= ADVANCED SEARCH ================= */
+
 .dt_adv_search .form-control {
   height: 38px;
 }
 
-/* table spacing like Sneat */
 .dt-advanced-search thead th {
   white-space: nowrap;
 }
 
-.menu-sub {
-  display: block;
-  overflow: hidden;
-  transition: height 0.25s ease;
-}
+/* ================= MENU ================= */
 
-.menu-item:not(.open) > .menu-sub {
-  height: 0;
+.menu-sub {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
 }
 
 .menu-item.open > .menu-sub {
-  height: auto;
+  max-height: 500px;
 }
-a.menu-link {
+
+a.menu-link,
+.menu-text,
+#layout-menu .menu-text {
   text-decoration: none !important;
 }
+
+/* ================= LOGO ================= */
 
 .logo {
   height: 6em;
@@ -37,20 +34,18 @@ a.menu-link {
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
 @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -59,13 +54,8 @@ a.menu-link {
   }
 }
 
-.card {
-  padding: 2em;
-}
+/* ================= DROPDOWN ================= */
 
-.read-the-docs {
-  color: #888;
-}
 .dropdown-menu .dropdown-item:hover,
 .dropdown-menu .dropdown-item:focus {
   background-color: rgba(105, 108, 255, 0.08);
@@ -77,14 +67,14 @@ a.menu-link {
   color: #696cff;
 }
 
-.menu-text {
-  text-decoration: none !important;
-}
-#layout-menu .menu-text {
-  text-decoration: none !important;
+/* ================= SIDEBAR ================= */
+
+.layout-menu-collapsed {
+  width: 70px;
+  transition: width 0.3s ease;
+  overflow: hidden;
 }
 
-/* Hover expand sidebar */
 .layout-menu-collapsed .layout-menu:hover {
   width: 260px !important;
 }
@@ -98,28 +88,240 @@ a.menu-link {
   margin-left: 260px;
 }
 
-/* sidebar.css */
-
-/* Collapsed state */
-.layout-menu-collapsed {
-  width: 70px; /* only icons visible */
-  transition: width 0.3s ease; /* smooth shrink/expand */
-  overflow: hidden;
-}
-
-/* Hovered state expands */
 .layout-menu.hovered {
-  width: 250px; /* full sidebar width */
+  width: 250px;
   transition: width 0.3s ease;
 }
 
-/* Submenu sliding */
-.menu-sub {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
+/* ================= DATATABLE FIX ================= */
+
+/* remove grey backgrounds */
+
+.card-datatable,
+.dataTables_wrapper,
+.table,
+.table-responsive {
+  background-color: transparent !important;
 }
 
-.menu-item.open > .menu-sub {
-  max-height: 500px; /* adjust for number of items */
+/* full width — NOT centered */
+
+.dataTables_wrapper,
+.dt-responsive {
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+/* ================= SNEAT CARD STYLE ================= */
+
+.card {
+  padding: 0 !important;
+  border: 0;
+  border-radius: 0.625rem;
+  background-color: #ffffff;
+  box-shadow: 0 0.125rem 0.375rem rgba(161, 172, 184, 0.12);
+}
+
+.card-header {
+  padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+  background: transparent;
+  border-bottom: 0;
+  font-weight: 600;
+}
+
+/* ================= TABLE — SINGLE LINE STYLE ================= */
+
+/* remove all borders */
+
+.table,
+.table th,
+.table td {
+  border: none !important;
+}
+
+/* only horizontal row line */
+
+.table > tbody > tr {
+  border-bottom: 1px solid #eceef1;
+}
+
+/* remove last row line */
+
+.table > tbody > tr:last-child {
+  border-bottom: none;
+}
+
+/* header bottom line */
+
+.table > thead > tr {
+  border-bottom: 2px solid #e5e7eb;
+}
+
+/* padding like Sneat */
+
+.table > :not(caption) > * > * {
+  padding: 0.9375rem 1.25rem;
+}
+
+/* remove vertical lines */
+
+.table > :not(caption) > * > * + * {
+  border-left: none !important;
+}
+
+/* ================= DATATABLE CONTROLS ================= */
+
+/* 🔥 PERFECT GAP between controls and table */
+
+.dataTables_wrapper .row:first-child {
+  margin-bottom: 1.25rem !important;
+}
+
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_length {
+  margin-bottom: 0.75rem;
+}
+
+.dataTables_wrapper .table-responsive {
+  margin-top: 0.5rem;
+}
+
+/* align responsive control icon */
+
+table.dataTable.dtr-inline.collapsed > tbody > tr > td.control:before {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ================= MOBILE FIX ================= */
+
+@media (max-width: 768px) {
+  .dataTables_wrapper .row:first-child {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .dataTables_wrapper .dataTables_filter {
+    margin-top: 0.5rem;
+  }
+}
+
+/* ===================================================== */
+/* ================= CUSTOM MODAL ====================== */
+/* ===================================================== */
+
+.custom-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(67, 89, 113, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.custom-modal-card {
+  width: 420px;
+  max-width: 92%;
+  background: #fff;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  position: relative;
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* close button */
+
+.custom-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* title */
+
+.modal-title {
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* detail rows */
+
+.details-row {
+  padding: 0.55rem 0;
+  border-bottom: 1px solid #eceef1;
+  font-size: 0.9rem;
+}
+
+.details-row:last-child {
+  border-bottom: none;
+}
+
+.details-row span {
+  font-weight: 600;
+  display: inline-block;
+  width: 110px;
+}
+
+/* ===================================================== */
+/* ===== SNEAT BLUE PLUS BUTTON ======================== */
+/* ===================================================== */
+
+/* remove default icon completely */
+table.dataTable.dtr-inline.collapsed > tbody > tr > td.control:before {
+  all: unset !important;
+}
+
+/* create blue circle + */
+table.dataTable.dtr-inline.collapsed > tbody > tr > td.control {
+  position: relative;
+  padding-left: 44px !important;
+  cursor: pointer;
+}
+
+table.dataTable.dtr-inline.collapsed > tbody > tr > td.control::before {
+  content: "+" !important;
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+
+  background: #696cff;
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* when open → minus */
+table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td.control::before {
+  content: "−" !important;
+}
+
+.status-badge {
+  display: inline-flex;              /* use flex to center content */
+  align-items: center;               /* vertical centering */
+  justify-content: center;           /* horizontal centering */
+  padding: 0.25rem 0.75rem;          /* a bit wider padding */
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgb(142, 219, 85);          /* text color */
+  background-color: rgb(236, 249, 225); /* background */
+  border-radius: 0.5rem;             /* more rounded corners */
+  min-width: 50px;                   /* optional: keep consistent width */
+  text-align: center;   
 }

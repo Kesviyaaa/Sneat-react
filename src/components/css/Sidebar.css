@@ -2,6 +2,17 @@
 /* sidebar.css */
 
 /* Target by class 'app-brand-text' */
+.layout-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+.layout-page {
+  padding-left: 260px; /* or margin-left */
+}
+
 .app-brand-text {
   color: black; /* sets text color to black */
 }
@@ -42,5 +53,3 @@
   .layout-menu.hovered {
     width: 250px; /* expand on hover */
   }
-
-  
