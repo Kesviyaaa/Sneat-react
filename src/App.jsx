@@ -30,7 +30,7 @@ function App() {
 
           {/* Main page */}
           <div className="layout-page">
-          <Navbar collapsed={collapsed} />
+          {/* <Navbar collapsed={collapsed} /> */}
             {/* Content wrapper */}
             <div className="content-wrapper">
               <div className="container-xxl flex-grow-1 container-p-y">

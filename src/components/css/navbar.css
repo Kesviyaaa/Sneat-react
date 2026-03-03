@@ -5,7 +5,7 @@
     left: 0;
     right: 0;
     z-index: 1030; /* above sidebar and content */
-    width: 80%;
+    width: 81%;
     transition: margin-left 0.3s ease;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* subtle shadow */
   }
@@ -52,3 +52,5 @@
   .layout-navbar {
     z-index: 1040; /* below expanded sidebar */
   }
+
+  

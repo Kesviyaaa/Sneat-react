@@ -1,55 +1,190 @@
-/* 🔹 base submenu hidden */
-/* sidebar.css */
+/* Logo */
 
-/* Target by class 'app-brand-text' */
+.layout-menu-header {
+  position: sticky;      /* stays fixed at top of sidebar */
+  top: 0;
+  z-index: 1000;         /* above scrollable menu */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #fff; /* same as sidebar */
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.sidebar-toggle {
+  position: absolute;
+  top: 22px;
+  right: -15px;              /* half outside */
+  width: 32px;
+  height: 32px;
+  background: #696cff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  cursor: pointer;
+  z-index: 1000;
+  border: 3px solid #f5f5f9;    /* 🔥 gives carved look */
+}
+.sidebar-toggle i {
+  color: #fff;
+  font-size: 18px;
+}
+.app-brand a {
+  overflow: visible !important;
+}
+/* Logo image */
+.sidebar-logo {
+  height: 40px;
+  width: auto;
+}
+
+/* Brand text */
+.app-brand-text {
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 0.5rem;
+  color: black;
+}
+.layout-menu {
+  overflow: visible;  /* ensure children can extend outside */
+}
+.layout-menu-toggle {
+  position: absolute;
+  top: 20px;
+  right: -18px;                /* outside sidebar when collapsed */
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #696cff;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  cursor: pointer;
+  z-index: 1001;
+  border: 3px solid #f5f5f9;
+  transition: all 0.3s ease;   /* smooth movement with sidebar width */
+}
+
+/* Sidebar base */
 .layout-menu {
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
-  overflow-y: auto;
+  width: 250px;
+  overflow: visible;       /* important so toggle isn't clipped */
+  background-color: #fff;
+  transition: width 0.3s ease;
+  z-index: 1030;
 }
+
+
+/* Main page shift */
 .layout-page {
-  padding-left: 260px; /* or margin-left */
+  padding-left: 250px;
+  transition: padding-left 0.3s ease;
 }
 
-.app-brand-text {
-  color: black; /* sets text color to black */
-}
-/* Only for sidebar */
-.layout-menu .app-brand-text {
-  color: black;
+/* Collapsed state */
+.layout-menu.layout-menu-collapsed {
+  width: 80px;
 }
 
+/* Hover expand */
+.layout-menu.hovered {
+  width: 250px;
+}
+.layout-menu.hovered .layout-menu-toggle {
+  right: -18px;  /* stays visually at the edge */
+}
+
+/* Submenu animation */
 .menu-sub {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.35s ease;
-  }
-  
-  /* 🔹 when open */
-  .menu-item.open > .menu-sub {
-    max-height: 500px; /* enough for content */
-  }
-  
-  /* optional smoother feel */
-  .menu-link {
-    cursor: pointer;
-  }
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
 
-  .logo-img {
-    padding-left: 100px;
-  }
+.menu-item.open > .menu-sub {
+  max-height: 500px;
+}
 
-  .layout-menu {
-    width: 250px; /* normal width */
-    transition: width 0.3s ease; /* smooth expansion */
-  }
-  
-  .layout-menu.layout-menu-collapsed {
-    width: 80px; /* collapsed width */
-  }
-  
-  .layout-menu.hovered {
-    width: 250px; /* expand on hover */
-  }
+/* Prevent text wrapping overflow */
+.menu-link {
+  cursor: pointer;
+  white-space: nowrap;
+}
+.menu-inner {
+  overflow-y: auto;        /* only this part scrolls */
+  height: calc(100vh - 70px); /* subtract header height */
+  padding-top: 0.5rem;
+}
+.layout-menu-toggle:hover {
+  background: #5a5cff;
+  color: #fff;
+}
+
+.layout-menu-toggle {
+  position: absolute;
+  top: 22px;
+  right: 0;                  /* at sidebar edge */
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #696cff;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1001;
+  transition: all 0.3s ease;
+}
+
+
+.layout-menu.layout-menu-collapsed .layout-menu-toggle {
+  right: 0;                  /* same alignment when collapsed */
+  transform: translate(50%, 0);
+}
+
+
+.layout-menu-toggle::before {
+  content: "";
+  position: absolute;
+  top: -3px;                /* extend above */
+  left: -3px;               /* extend left */
+  width: calc(100% + 6px);  /* full button + border */
+  height: calc(100% + 6px);
+  border-radius: 50%;
+  border: 3px solid #f5f5f9;
+  background: transparent;
+  z-index: -1;              /* behind button */
+}
+
+.layout-menu.layout-menu-collapsed .menu-text {
+  display: none;  /* hide text when collapsed */
+}
+
+.layout-menu.hovered .menu-text {
+  display: inline-block;   /* show text */
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.menu-text {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.layout-menu.layout-menu-collapsed .menu-text {
+  opacity: 0;
+}
+
+.layout-menu.hovered .menu-text {
+  opacity: 1;
+}

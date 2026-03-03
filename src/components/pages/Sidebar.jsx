@@ -1,8 +1,9 @@
 import React from "react";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/sneat.svg";
 import "../css/sidebar.css";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import "boxicons/css/boxicons.min.css";
 
 const Sidebar = ({ collapsed, toggleSidebar }) => {
   const [hovered, setHovered] = useState(false);
@@ -29,16 +30,16 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
   const [openSubSubMenu, setOpenSubSubMenu] = useState(null);
 
   return (
+    
     <aside
-      id="layout-menu"
-      className={`layout-menu menu-vertical menu ${
-        collapsed ? "layout-menu-collapsed" : ""
-      } ${hovered ? "hovered" : ""}`}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >    {/* App Brand / Logo */}
-      <div className="app-brand demo">
-        <a href="index.html" className="app-brand-link text-decoration-none"> 
+  id="layout-menu"
+  style={{ position: "fixed" }} /* keep fixed */
+  className={`layout-menu menu-vertical menu ${collapsed ? "layout-menu-collapsed" : ""} ${hovered ? "hovered" : ""}`}
+  onMouseEnter={handleMouseEnter}
+  onMouseLeave={handleMouseLeave}
+>   {/* App Brand / Logo */}
+<div className="app-brand demo" style={{ position: "relative" }}>    
+    <a href="index.html" className="app-brand-link text-decoration-none"> 
           <span className="app-brand-logo demo">
             <span className="text-primary">
               {/* SVG Logo */}
@@ -46,26 +47,50 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
               <img 
                 src={logo} 
                 alt="Sneat logo" 
-                height="90" 
-                width="80" 
-                style={{ paddingLeft: '5px' }}
+                className="sidebar-logo"
               />
               </span>
             </span>
           </span>
-          <span className="app-brand-text demo menu-text fw-bold ms-2">Sneat</span>
+          <span className="app-brand-text demo menu-text fw-bold ms-2 ">Sneat</span>
         </a>
 
         <a
-          href="javascript:void(0);"
-          className="layout-menu-toggle menu-link text-large ms-auto"
-          onClick={(e) => {
+  href="#!"
+  onClick={(e) => {
     e.preventDefault();
     toggleSidebar();
   }}
-        >
-          <i className="icon-base bx bx-chevron-left"></i>
-        </a>
+  style={{
+    position: "absolute",
+    top: "20px",
+    right: "-18px",           // fully outside
+    zIndex: 1001,
+    backgroundColor: "#696cff",
+    width: "36px",
+    height: "36px",
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+    cursor: "pointer",
+    textDecoration: "none",
+    border: "3px solid #f5f5f9"   // 🔥 carved effect
+  }}
+>
+  <i
+    className={`bx ${
+      collapsed && !hovered
+        ? "bx-chevron-right"
+        : "bx-chevron-left"
+    }`}
+    style={{
+      color: "#fff",
+      fontSize: "18px"
+    }}
+  ></i>
+</a>
       </div>
 
       <div className="menu-inner-shadow"></div>

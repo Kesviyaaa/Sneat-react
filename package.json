@@ -13,6 +13,7 @@
     "@popperjs/core": "^2.11.8",
     "apexcharts": "^5.7.0",
     "bootstrap": "^5.3.8",
+    "boxicons": "^2.1.4",
     "chart.js": "^4.5.1",
     "cors": "^2.8.6",
     "datatables.net": "^2.3.7",
