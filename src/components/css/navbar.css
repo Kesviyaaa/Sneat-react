@@ -1,0 +1,54 @@
+/* Make navbar fixed on top */
+.layout-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030; /* above sidebar and content */
+    width: 80%;
+    transition: margin-left 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* subtle shadow */
+  }
+  /* Sidebar overlapping */
+  .layout-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 250px; /* expanded width */
+    z-index: 1050; /* above navbar */
+    transition: width 0.3s ease;
+  }
+  
+  /* Collapsed sidebar */
+  .layout-menu.layout-menu-collapsed {
+    width: 80px; /* collapsed width */
+    z-index: 1050;
+  }
+  
+  /* Hover to expand */
+  .layout-menu.layout-menu-collapsed.hovered {
+    width: 250px;
+  }
+  
+  /* Add top padding to page content to avoid overlap */
+  .layout-wrapper {
+    padding-top: 70px; /* adjust to navbar height */
+  }
+  
+  /* Adjust navbar spacing when sidebar collapses/expands */
+  .layout-navbar.sidebar-collapsed {
+    margin-left: 70px; /* collapsed sidebar width */
+  }
+  
+  .layout-navbar.sidebar-expanded {
+    margin-left: 260px; /* expanded sidebar width */
+  }
+
+  .layout-menu.hovered {
+    width: 250px;
+    z-index: 1050; /* above navbar */
+  }
+  .layout-navbar {
+    z-index: 1040; /* below expanded sidebar */
+  }

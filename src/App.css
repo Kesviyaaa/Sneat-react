@@ -1,3 +1,6 @@
+
+
+
 /* ================= ADVANCED SEARCH ================= */
 
 .dt_adv_search .form-control {
@@ -189,8 +192,7 @@ a.menu-link,
 /* align responsive control icon */
 
 table.dataTable.dtr-inline.collapsed > tbody > tr > td.control:before {
-  top: 50%;
-  transform: translateY(-50%);
+  display: none !important;
 }
 
 /* ================= MOBILE FIX ================= */

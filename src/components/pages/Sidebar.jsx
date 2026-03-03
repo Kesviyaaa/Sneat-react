@@ -9,11 +9,19 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
 
   // Hover to expand
   const handleMouseEnter = () => {
-    if (collapsed) setHovered(true);
+    if (collapsed) {
+      setHovered(true);
+      document.querySelector(".layout-navbar").classList.add("sidebar-expanded");
+      document.querySelector(".layout-navbar").classList.remove("sidebar-collapsed");
+    }
   };
-
+  
   const handleMouseLeave = () => {
-    if (collapsed) setHovered(false);
+    if (collapsed) {
+      setHovered(false);
+      document.querySelector(".layout-navbar").classList.add("sidebar-collapsed");
+      document.querySelector(".layout-navbar").classList.remove("sidebar-expanded");
+    }
   };
 
   const [openMenu, setOpenMenu] = useState(null);

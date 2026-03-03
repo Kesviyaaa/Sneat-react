@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
+import "../css/navbar.css";
 
 
-const Navbar = () => {
+const Navbar = ({collapsed}) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef(null);
@@ -45,8 +46,9 @@ const Navbar = () => {
 
   return (
     <nav
-      className="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme"
-      id="layout-navbar"
+      className={`layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme ${
+        collapsed ? "sidebar-collapsed" : "sidebar-expanded"
+      }`}
     >
       {/* Left menu toggle */}
       <div className="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
