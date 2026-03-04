@@ -5,23 +5,22 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "boxicons/css/boxicons.min.css";
 
-const Sidebar = ({ collapsed, toggleSidebar }) => {
+const Sidebar = ({ collapsed, toggleSidebar, setWrapperHover }) => {
   const [hovered, setHovered] = useState(false);
+  const location = useLocation();
 
-  // Hover to expand
+  // ✅ Hover to temporarily expand
   const handleMouseEnter = () => {
     if (collapsed) {
       setHovered(true);
-      document.querySelector(".layout-navbar").classList.add("sidebar-expanded");
-      document.querySelector(".layout-navbar").classList.remove("sidebar-collapsed");
+      setWrapperHover(true);
     }
   };
-  
+
   const handleMouseLeave = () => {
     if (collapsed) {
       setHovered(false);
-      document.querySelector(".layout-navbar").classList.add("sidebar-collapsed");
-      document.querySelector(".layout-navbar").classList.remove("sidebar-expanded");
+      setWrapperHover(false);
     }
   };
 
@@ -33,64 +32,67 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
     
     <aside
   id="layout-menu"
-  style={{ position: "fixed" }} /* keep fixed */
-  className={`layout-menu menu-vertical menu ${collapsed ? "layout-menu-collapsed" : ""} ${hovered ? "hovered" : ""}`}
+  style={{ position: "fixed" }}
+  className={`layout-menu menu-vertical menu ${
+    collapsed ? "layout-menu-collapsed" : ""
+  } ${collapsed && hovered ? "hovered" : ""}`}
   onMouseEnter={handleMouseEnter}
   onMouseLeave={handleMouseLeave}
->   {/* App Brand / Logo */}
-<div className="app-brand demo" style={{ position: "relative" }}>    
-    <a href="index.html" className="app-brand-link text-decoration-none"> 
+>
+      {/* 🔷 BRAND */}
+      <div className="app-brand demo" style={{ position: "relative" }}>
+        <a href="#!" className="app-brand-link text-decoration-none">
           <span className="app-brand-logo demo">
-            <span className="text-primary">
-              {/* SVG Logo */}
-              <span className="app-brand-logo demo">
-              <img 
-                src={logo} 
-                alt="Sneat logo" 
-                className="sidebar-logo"
-              />
-              </span>
-            </span>
+            <img src={logo} alt="Sneat logo" className="sidebar-logo" />
           </span>
-          <span className="app-brand-text demo menu-text fw-bold ms-2 ">Sneat</span>
+
+          <span className="app-brand-text demo menu-text fw-bold ms-2">
+            Sneat
+          </span>
         </a>
 
+        {/* 🔷 TOGGLE BUTTON */}
         <a
-  href="#!"
-  onClick={(e) => {
-    e.preventDefault();
-    toggleSidebar();
-  }}
-  style={{
-    position: "absolute",
-    top: "20px",
-    right: "-18px",           // fully outside
-    zIndex: 1001,
-    backgroundColor: "#696cff",
-    width: "36px",
-    height: "36px",
-    borderRadius: "50%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-    cursor: "pointer",
-    textDecoration: "none",
-    border: "3px solid #f5f5f9"   // 🔥 carved effect
-  }}
->
-  <i
-    className={`bx ${
-      collapsed && !hovered
-        ? "bx-chevron-right"
-        : "bx-chevron-left"
-    }`}
-    style={{
-      color: "#fff",
-      fontSize: "18px"
-    }}
-  ></i>
-</a>
+          href="#!"
+          onClick={(e) => {
+            e.preventDefault();
+            toggleSidebar();
+          }}
+          style={{
+            position: "absolute",
+            top: "20px",
+            right: "0",
+            transform: "translate(50%, 0)",
+            zIndex: 1001,
+            backgroundColor: "#696cff",
+            width: "36px",
+            height: "36px",
+            borderRadius: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+            cursor: "pointer",
+            textDecoration: "none",
+            border: "3px solid #f5f5f9",
+
+            // ⭐ visibility control
+            opacity: collapsed && !hovered ? 0 : 1,
+            pointerEvents: collapsed && !hovered ? "none" : "auto",
+            transition: "opacity 0.2s ease",
+          }}
+        >
+          <i
+            className={`bx ${
+              !collapsed
+                ? "bx-chevron-left"
+                : hovered
+                ? "bx-chevron-right"
+                : ""
+            }`}
+            style={{ color: "#fff", fontSize: "18px" }}
+          ></i>
+        </a>
       </div>
 
       <div className="menu-inner-shadow"></div>
