@@ -433,3 +433,14 @@
 .layout-wrapper.layout-menu-collapsed.menu-hover #layout-menu {
   z-index: 2000 !important;
 }
+
+/* 🔥 allow toggle to overflow sidebar */
+#layout-menu {
+  overflow: visible !important;
+}
+
+/* 🔥 ensure brand area doesn't clip */
+.app-brand {
+  overflow: visible !important;
+  position: relative;
+}

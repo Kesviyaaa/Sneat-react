@@ -31,71 +31,71 @@ const Sidebar = ({ collapsed, toggleSidebar, setWrapperHover }) => {
   return (
     
     <aside
-  id="layout-menu"
-  style={{ position: "fixed" }}
-  className={`layout-menu menu-vertical menu ${
-    collapsed ? "layout-menu-collapsed" : ""
-  } ${collapsed && hovered ? "hovered" : ""}`}
-  onMouseEnter={handleMouseEnter}
-  onMouseLeave={handleMouseLeave}
->
-      {/* 🔷 BRAND */}
-      <div className="app-brand demo" style={{ position: "relative" }}>
-        <a href="#!" className="app-brand-link text-decoration-none">
-          <span className="app-brand-logo demo">
-            <img src={logo} alt="Sneat logo" className="sidebar-logo" />
-          </span>
+    id="layout-menu"
+    style={{ position: "fixed" }}
+    className={`layout-menu menu-vertical menu ${
+      collapsed ? "layout-menu-collapsed" : ""
+    } ${collapsed && hovered ? "hovered" : ""}`}
+    onMouseEnter={handleMouseEnter}
+    onMouseLeave={handleMouseLeave}
+  >
 
-          <span className="app-brand-text demo menu-text fw-bold ms-2">
-            Sneat
-          </span>
-        </a>
+    {/* 🔷 TOGGLE BUTTON — moved OUTSIDE brand */}
+    <a
+      href="#!"
+      onClick={(e) => {
+        e.preventDefault();
+        toggleSidebar();
+      }}
+      style={{
+        position: "absolute",
+        top: "20px",
+        right: "0",
+        transform: "translate(50%, 0)", // ⭐ sticks to sidebar edge
+        zIndex: 1001,
+        backgroundColor: "#696cff",
+        width: "36px",
+        height: "36px",
+        borderRadius: "50%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+        cursor: "pointer",
+        textDecoration: "none",
+        border: "3px solid #f5f5f9",
 
-        {/* 🔷 TOGGLE BUTTON */}
-        <a
-          href="#!"
-          onClick={(e) => {
-            e.preventDefault();
-            toggleSidebar();
-          }}
-          style={{
-            position: "absolute",
-            top: "20px",
-            right: "0",
-            transform: "translate(50%, 0)",
-            zIndex: 1001,
-            backgroundColor: "#696cff",
-            width: "36px",
-            height: "36px",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-            cursor: "pointer",
-            textDecoration: "none",
-            border: "3px solid #f5f5f9",
+        opacity: collapsed && !hovered ? 0 : 1,
+        pointerEvents: collapsed && !hovered ? "none" : "auto",
+        transition: "opacity 0.2s ease"
+      }}
+    >
+      <i
+        className={`bx ${
+          !collapsed
+            ? "bx-chevron-left"
+            : hovered
+            ? "bx-chevron-right"
+            : ""
+        }`}
+        style={{ color: "#fff", fontSize: "18px" }}
+      ></i>
+    </a>
 
-            // ⭐ visibility control
-            opacity: collapsed && !hovered ? 0 : 1,
-            pointerEvents: collapsed && !hovered ? "none" : "auto",
-            transition: "opacity 0.2s ease",
-          }}
-        >
-          <i
-            className={`bx ${
-              !collapsed
-                ? "bx-chevron-left"
-                : hovered
-                ? "bx-chevron-right"
-                : ""
-            }`}
-            style={{ color: "#fff", fontSize: "18px" }}
-          ></i>
-        </a>
-      </div>
+    {/* 🔷 BRAND */}
+    <div className="app-brand demo">
+      <a href="#!" className="app-brand-link text-decoration-none">
+        <span className="app-brand-logo demo">
+          <img src={logo} alt="Sneat logo" className="sidebar-logo" />
+        </span>
 
-      <div className="menu-inner-shadow"></div>
+        <span className="app-brand-text demo menu-text fw-bold ms-2">
+          Sneat
+        </span>
+      </a>
+    </div>
+
+    <div className="menu-inner-shadow"></div>
 
       {/* Menu Items */}
       <ul className="menu-inner py-1">
