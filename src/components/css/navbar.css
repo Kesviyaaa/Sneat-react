@@ -1,56 +1,69 @@
-/* Make navbar fixed on top */
+/* ===============================
+   🔹 NAVBAR BASE
+=============================== */
 .layout-navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1030; /* above sidebar and content */
-    width: 81%;
-    transition: margin-left 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* subtle shadow */
-  }
-  /* Sidebar overlapping */
-  .layout-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 250px; /* expanded width */
-    z-index: 1050; /* above navbar */
-    transition: width 0.3s ease;
-  }
-  
-  /* Collapsed sidebar */
-  .layout-menu.layout-menu-collapsed {
-    width: 80px; /* collapsed width */
-    z-index: 1050;
-  }
-  
-  /* Hover to expand */
-  .layout-menu.layout-menu-collapsed.hovered {
-    width: 250px;
-  }
-  
-  /* Add top padding to page content to avoid overlap */
-  .layout-wrapper {
-    padding-top: 70px; /* adjust to navbar height */
-  }
-  
-  /* Adjust navbar spacing when sidebar collapses/expands */
-  .layout-navbar.sidebar-collapsed {
-    margin-left: 70px; /* collapsed sidebar width */
-  }
-  
-  .layout-navbar.sidebar-expanded {
-    margin-left: 260px; /* expanded sidebar width */
-  }
+  position: fixed;
+  top: 0;
+  height: 70px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 1040; /* above content but below expanded sidebar */
+  transition: left 0.3s ease, width 0.3s ease;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+}
 
-  .layout-menu.hovered {
-    width: 250px;
-    z-index: 1050; /* above navbar */
-  }
-  .layout-navbar {
-    z-index: 1040; /* below expanded sidebar */
-  }
+/* Gap (horizontal space between sidebar and navbar) */
+:root {
+  --sidebar-gap: 16px; /* ~1 inch */
+}
 
-  
+/* Sidebar expanded */
+.layout-navbar.sidebar-expanded {
+  left: calc(250px + var(--sidebar-gap));  /* sidebar width + gap */
+  width: calc(100% - 250px - var(--sidebar-gap));
+}
+
+/* Sidebar collapsed */
+.layout-navbar.sidebar-collapsed {
+  left: calc(80px + var(--sidebar-gap));   /* collapsed sidebar width + gap */
+  width: calc(100% - 80px - var(--sidebar-gap));
+}
+
+/* Hovered sidebar (collapsed + hover) */
+.layout-navbar.sidebar-hovered {
+  left: calc(250px + var(--sidebar-gap));
+  width: calc(100% - 250px - var(--sidebar-gap));
+}
+
+/* ===============================
+   🔹 PAGE CONTENT PADDING
+=============================== */
+.layout-wrapper {
+  padding-top: 70px; /* equal to navbar height */
+}
+
+/* ===============================
+   🔹 SIDEBAR BASE (unchanged)
+=============================== */
+.layout-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 250px;
+  z-index: 1050; /* above navbar */
+  transition: width 0.3s ease;
+  overflow: visible;
+}
+
+/* Collapsed sidebar */
+.layout-menu.layout-menu-collapsed {
+  width: 80px;
+}
+
+/* Hover expand */
+.layout-menu.layout-menu-collapsed.hovered {
+  width: 250px;
+}

@@ -1,57 +1,43 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../css/navbar.css";
 
-
-const Navbar = ({collapsed}) => {
+const Navbar = ({ collapsed, hovered }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef(null);
   const [themeOpen, setThemeOpen] = useState(false);
   const themeRef = useRef(null);
 
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (langRef.current && !langRef.current.contains(e.target)) {
         setLangOpen(false);
       }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (e) => {
       if (themeRef.current && !themeRef.current.contains(e.target)) {
         setThemeOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Function to change theme
   const handleThemeChange = (theme) => {
     const body = document.body;
     body.classList.remove("theme-light", "theme-dark", "theme-system");
-    if (theme === "system") {
-      body.classList.add("theme-system");
-    } else if (theme === "light") {
-      body.classList.add("theme-light");
-    } else {
-      body.classList.add("theme-dark");
-    }
+    if (theme === "system") body.classList.add("theme-system");
+    else if (theme === "light") body.classList.add("theme-light");
+    else body.classList.add("theme-dark");
   };
 
   return (
     <nav
-      className={`layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme ${
+      className={`layout-navbar navbar ${
         collapsed ? "sidebar-collapsed" : "sidebar-expanded"
-      }`}
+      } ${hovered ? "sidebar-hovered" : ""}`}
     >
       {/* Left menu toggle */}
-      <div className="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
+      <div className="layout-menu-toggle navbar-nav align-items-center me-4 me-xl-0 d-xl-none">
         <a className="nav-item nav-link px-0 me-xl-6" href="#">
           <i className="icon-base bx bx-menu icon-md"></i>
         </a>
@@ -182,7 +168,7 @@ const Navbar = ({collapsed}) => {
                 <span className="dropdown-shortcuts-icon rounded-circle mb-3">
                   <i className="icon-base bx bx-calendar icon-26px text-heading"></i>
                 </span>
-                <a href="app-calendar.html" className="stretched-link">Calendar</a>
+                <a href="app-calendar.html" className="stretched-link ">Calendar</a>
                 <small>Appointments</small>
               </div>
               <div className="dropdown-shortcuts-item col">
