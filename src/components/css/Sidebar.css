@@ -436,3 +436,13 @@
   
   
   
+  /* Blue dot indicator like Sneat */
+.menu-sub .menu-item.active > .menu-link::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #696cff;
+  margin-right: 10px;
+  display: inline-block;
+}

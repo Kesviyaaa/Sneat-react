@@ -41,8 +41,7 @@ function App() {
             <Navbar collapsed={collapsed} />
 
             <div className="content-wrapper">
-              <div className="container-xxl flex-grow-1 container-p-y">
-                <Routes>
+            <div className="container-fluid flex-grow-1 container-p-y">                <Routes>
                   <Route path="/" element={<Navigate to="/analytics" />} />
                   <Route path="/analytics" element={<Analytics />} />
                   <Route

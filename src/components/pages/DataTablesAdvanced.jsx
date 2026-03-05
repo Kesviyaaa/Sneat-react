@@ -15,21 +15,57 @@ const DataTablesAdvanced = () => {
   const responsiveDt = useRef(null);
   const [showModal, setShowModal] = React.useState(false);
   const [selectedRow, setSelectedRow] = React.useState(null);
+
+
+
+  useEffect(() => {
+    const sidebar = document.querySelector("#layout-menu");
+  
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+  
+      if (sidebar) {
+        sidebar.style.pointerEvents = "none";
+        sidebar.style.opacity = "0.6";
+      }
+  
+    } else {
+      document.body.style.overflow = "auto";
+  
+      if (sidebar) {
+        sidebar.style.pointerEvents = "auto";
+        sidebar.style.opacity = "1";
+      }
+    }
+  
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showModal]);
+
+
   const handleCloseModal = () => {
     setShowModal(false);
   
     if (responsiveDt.current && selectedRow) {
-      // find the row in DataTable that matches selectedRow
       const row = responsiveDt.current
         .rows()
         .nodes()
         .to$()
-        .filter((_, tr) => $(tr).find("td").eq(1).text() === selectedRow.name);
+        .filter((_, tr) =>
+          $(tr).find("td").eq(1).text() === selectedRow.name
+        );
   
       if (row.length) {
-        // collapse the row if it’s open
-        responsiveDt.current.row(row).child.hide();
-        $(row).removeClass("parent"); // remove the "open" class
+        const dtRow = responsiveDt.current.row(row);
+  
+        // collapse responsive child
+        if (dtRow.child.isShown()) {
+          dtRow.child.hide();
+        }
+  
+        // remove expanded class so + icon returns
+        $(row).removeClass("dtr-expanded");
       }
     }
   
@@ -96,12 +132,17 @@ const DataTablesAdvanced = () => {
   
     // ✅ 2. CLICK HANDLER — PUT HERE
     $(responsiveTableRef.current).on("click", "td.control", function () {
-      const rowData = responsiveDt.current
-        .row($(this).closest("tr"))
-        .data();
-  
-      setSelectedRow(rowData);
-      setShowModal(true);
+      const tr = $(this).closest("tr");
+      const row = responsiveDt.current.row(tr);
+    
+      // Let DataTables toggle first
+      setTimeout(() => {
+        if (tr.hasClass("dtr-expanded")) {
+          const rowData = row.data();
+          setSelectedRow(rowData);
+          setShowModal(true);
+        }
+      }, 50);
     });
   
     // cleanup
@@ -117,19 +158,19 @@ const DataTablesAdvanced = () => {
   }, []);
 
   return (
-    <div className="content-wrapper">
-      <div className="container-xxl flex-grow-1 container-p-y">
+    <div>
+      
   
         {/* ===== YOUR CARD + TABLE ===== */}
         <div className="card">
           <h5 className="card-header pb-0">Responsive Datatable</h5>
   
           <div className="card-datatable table-responsive">
-            <table
-              ref={responsiveTableRef}
-              className="dt-responsive table table-bordered"
-              style={{ width: "100%" }}
-            >
+          <table
+            ref={responsiveTableRef}
+            className="table table-bordered dataTable dtr-inline "
+            style={{ width: "100%" }}
+          >
               <thead>
                 <tr>
                   <th></th>
@@ -179,7 +220,7 @@ const DataTablesAdvanced = () => {
   
         {/* ✅ still inside container */}
       </div>
-    </div>
+
   );
 };
 

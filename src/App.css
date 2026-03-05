@@ -1,22 +1,86 @@
 
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap");
 
+/* ===================================== */
+/* Sneat Style Responsive Toggle Button */
+/* ===================================== */
+.table-header th {
+  font-family: "Public Sans", sans-serif;
+  font-weight: 600;
+  color: #1e2a38;
+}
+.table tbody td {
+  font-family: "Public Sans", sans-serif;
+  color: #697a8d; /* normal text color */
+  font-size: 0.875rem;
+}
+.status-badge {
+  font-family: "Public Sans", sans-serif;
+  font-weight: 500;
+  color: white;
+  background-color: #28a745;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+}
 
+/* Remove DataTables default icon */
+table.dataTable.dtr-inline.collapsed > tbody > tr > td.control::before {
+  display: none !important;
+}
+
+/* Control column spacing */
+table.dataTable.dtr-inline.collapsed > tbody > tr > td.control {
+  position: relative;
+  padding-left: 42px !important;
+  cursor: pointer;
+}
+
+/* Blue filled circle + */
+table.dataTable.dtr-inline.collapsed > tbody > tr > td.control::after {
+  content: "+";
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+
+  background: #696cff;
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* When expanded show minus */
+table.dataTable.dtr-inline.collapsed > tbody > tr.dtr-expanded > td.control::after {
+  content: "−";
+}
 /* ================= ADVANCED SEARCH ================= */
-/* ===== Page Background ===== */
 body {
   background-color: rgb(244, 244, 248);
 }
 
-/* Layout wrapper */
 .layout-wrapper {
   background-color: rgb(244, 244, 248);
   min-height: 100vh;
 }
 
-/* Content wrapper */
 .layout-page {
   background-color: rgb(244, 244, 248);
 }
+
+.content-wrapper {
+  background-color: rgb(244, 244, 248);
+}
+
 .dt_adv_search .form-control {
   height: 38px;
 }
@@ -86,11 +150,16 @@ a.menu-link,
 
 /* ================= SIDEBAR ================= */
 
-.layout-menu-collapsed {
-  width: 70px;
-  transition: width 0.3s ease;
-  overflow: hidden;
+/* Sidebar collapsed */
+.layout-menu.layout-menu-collapsed {
+  width: 80px;
 }
+
+/* Page shift when sidebar collapsed */
+
+
+/* Page shift when sidebar expanded */
+
 
 .layout-menu-collapsed .layout-menu:hover {
   width: 260px !important;
@@ -101,9 +170,7 @@ a.menu-link,
   visibility: visible;
 }
 
-.layout-menu-collapsed .layout-menu:hover ~ .layout-page {
-  margin-left: 260px;
-}
+
 
 .layout-menu.hovered {
   width: 250px;
@@ -111,9 +178,11 @@ a.menu-link,
 }
 
 /* ================= DATATABLE FIX ================= */
+/* ===================================================== */
+/* ===================== GENERAL ====================== */
+/* ===================================================== */
 
-/* remove grey backgrounds */
-
+/* Remove grey backgrounds */
 .card-datatable,
 .dataTables_wrapper,
 .table,
@@ -121,8 +190,7 @@ a.menu-link,
   background-color: transparent !important;
 }
 
-/* full width — NOT centered */
-
+/* Full width table wrapper */
 .dataTables_wrapper,
 .dt-responsive {
   width: 100% !important;
@@ -130,7 +198,6 @@ a.menu-link,
 }
 
 /* ================= SNEAT CARD STYLE ================= */
-
 .card {
   padding: 0 !important;
   border: 0;
@@ -144,52 +211,99 @@ a.menu-link,
   background: transparent;
   border-bottom: 0;
   font-weight: 600;
+  font-family: "Public Sans", sans-serif;
+  font-size: 1rem;
 }
 
-/* ================= TABLE — SINGLE LINE STYLE ================= */
+/* ================= TABLE ================= */
 
-/* remove all borders */
-
+/* Remove all borders */
 .table,
 .table th,
 .table td {
   border: none !important;
 }
 
-/* only horizontal row line */
-
+/* Horizontal row lines */
 .table > tbody > tr {
   border-bottom: 1px solid #eceef1;
 }
-
-/* remove last row line */
 
 .table > tbody > tr:last-child {
   border-bottom: none;
 }
 
-/* header bottom line */
-
+/* Header bottom line */
 .table > thead > tr {
   border-bottom: 2px solid #e5e7eb;
 }
 
-/* padding like Sneat */
-
+/* Padding like Sneat */
 .table > :not(caption) > * > * {
   padding: 0.9375rem 1.25rem;
 }
 
-/* remove vertical lines */
-
+/* Remove vertical lines */
 .table > :not(caption) > * > * + * {
   border-left: none !important;
 }
 
+/* ================= FONT STYLING ================= */
+
+/* Table header */
+.table thead th {
+  font-family: "Public Sans", sans-serif;
+  font-weight: 600;
+  color: #1e2a38;
+  font-size: 0.95rem;
+}
+
+/* Table body text — exclude control column */
+.table tbody td:not(.control) {
+  font-family: "Public Sans", sans-serif;
+  color: #697a8d;
+  font-size: 0.875rem;
+}
+
 /* ================= DATATABLE CONTROLS ================= */
 
-/* 🔥 PERFECT GAP between controls and table */
+/* Remove default ::before icon completely */
+table.dataTable.dtr-inline.collapsed > tbody > tr > td.control::before {
+  all: unset !important;
+}
 
+/* Control column setup */
+td.control {
+  position: relative;
+  padding-left: 42px !important;
+  cursor: pointer;
+}
+
+/* Blue circle + for expandable rows */
+td.control::after {
+  content: "+";
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #696cff;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* When row expanded → minus */
+tr.dtr-expanded td.control::after {
+  content: "−";
+}
+
+/* Perfect spacing between controls and table */
 .dataTables_wrapper .row:first-child {
   margin-bottom: 1.25rem !important;
 }
@@ -203,14 +317,7 @@ a.menu-link,
   margin-top: 0.5rem;
 }
 
-/* align responsive control icon */
-
-table.dataTable.dtr-inline.collapsed > tbody > tr > td.control:before {
-  display: none !important;
-}
-
 /* ================= MOBILE FIX ================= */
-
 @media (max-width: 768px) {
   .dataTables_wrapper .row:first-child {
     margin-bottom: 1.5rem !important;
@@ -224,7 +331,6 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > td.control:before {
 /* ===================================================== */
 /* ================= CUSTOM MODAL ====================== */
 /* ===================================================== */
-
 .custom-modal-backdrop {
   position: fixed;
   top: 0;
@@ -248,8 +354,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > td.control:before {
   box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
 }
 
-/* close button */
-
+/* Close button */
 .custom-close {
   position: absolute;
   top: 10px;
@@ -260,19 +365,19 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > td.control:before {
   cursor: pointer;
 }
 
-/* title */
-
+/* Modal title */
 .modal-title {
   font-weight: 600;
   margin-bottom: 1rem;
+  font-family: "Public Sans", sans-serif;
 }
 
-/* detail rows */
-
+/* Detail rows */
 .details-row {
   padding: 0.55rem 0;
   border-bottom: 1px solid #eceef1;
   font-size: 0.9rem;
+  font-family: "Public Sans", sans-serif;
 }
 
 .details-row:last-child {
@@ -286,59 +391,39 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > td.control:before {
 }
 
 /* ===================================================== */
-/* ===== SNEAT BLUE PLUS BUTTON ======================== */
+/* ================= STATUS BADGE ====================== */
 /* ===================================================== */
-
-/* remove default icon completely */
-table.dataTable.dtr-inline.collapsed > tbody > tr > td.control:before {
-  all: unset !important;
-}
-
-/* create blue circle + */
-table.dataTable.dtr-inline.collapsed > tbody > tr > td.control {
-  position: relative;
-  padding-left: 44px !important;
-  cursor: pointer;
-}
-
-table.dataTable.dtr-inline.collapsed > tbody > tr > td.control::before {
-  content: "+" !important;
-  position: absolute;
-  top: 50%;
-  left: 12px;
-  transform: translateY(-50%);
-
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-
-  background: #696cff;
-  color: #fff;
-
-  display: flex;
+.status-badge {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  font-size: 14px;
-  font-weight: 600;
-}
-
-/* when open → minus */
-table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td.control::before {
-  content: "−" !important;
-}
-
-.status-badge {
-  display: inline-flex;              /* use flex to center content */
-  align-items: center;               /* vertical centering */
-  justify-content: center;           /* horizontal centering */
-  padding: 0.25rem 0.75rem;          /* a bit wider padding */
+  padding: 0.25rem 0.75rem;
   font-size: 0.85rem;
   font-weight: 600;
-  color: rgb(142, 219, 85);          /* text color */
-  background-color: rgb(236, 249, 225); /* background */
-  border-radius: 0.5rem;             /* more rounded corners */
-  min-width: 50px;                   /* optional: keep consistent width */
-  text-align: center;   
+  color: rgb(142, 219, 85);
+  background-color: rgb(236, 249, 225);
+  border-radius: 0.5rem;
+  min-width: 50px;
+  text-align: center;
 }
 
+.footer-link {
+  text-decoration: none !important;
+  color: inherit;
+}
+
+.footer-link:hover {
+  text-decoration: none !important;
+}
+
+/* Footer links */
+.footer-link {
+  text-decoration: none;
+  color: #696cff;   /* Sneat violet */
+  font-weight: 500;
+}
+
+/* Hover effect */
+.footer-link:hover {
+  color: #5a5fe0;   /* darker violet on hover */
+}
