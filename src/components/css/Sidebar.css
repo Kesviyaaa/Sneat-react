@@ -446,3 +446,8 @@
   margin-right: 10px;
   display: inline-block;
 }
+
+.menu-item.active > .menu-link {
+  position: relative;
+}
+

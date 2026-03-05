@@ -187,3 +187,37 @@
     .col-xxl-8, .col-xxl-4 { flex: 0 0 100%; max-width: 100%; }
     .col-lg-6 { flex: 0 0 50%; max-width: 50%; }
   }
+
+  /* ================= SNEAT GLOBAL FONT ================= */
+
+body {
+  font-family: "Public Sans", sans-serif;
+  font-weight: 400;
+  color: #697a8d;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Public Sans", sans-serif;
+  font-weight: 600;
+  color: #566a7f;
+}
+
+.card-title {
+  font-family: "Public Sans", sans-serif;
+  font-weight: 600;
+}
+
+small {
+  font-weight: 500;
+}
+
+.badge {
+  font-family: "Public Sans", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.btn {
+  font-family: "Public Sans", sans-serif;
+  font-weight: 500;
+}

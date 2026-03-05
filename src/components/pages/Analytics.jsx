@@ -26,6 +26,9 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+ChartJS.defaults.font.family = "'Public Sans', sans-serif";
+ChartJS.defaults.font.size = 12;
+ChartJS.defaults.color = "#697a8d";
 
 const Analytics = () => {
   // Example for Order Chart (mini bar)

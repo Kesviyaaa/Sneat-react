@@ -267,43 +267,58 @@ a.menu-link,
 
 /* ================= DATATABLE CONTROLS ================= */
 
-/* Remove default ::before icon completely */
+/* Remove default icon */
 table.dataTable.dtr-inline.collapsed > tbody > tr > td.control::before {
   all: unset !important;
 }
 
-/* Control column setup */
+/* Control column spacing */
 td.control {
   position: relative;
   padding-left: 42px !important;
   cursor: pointer;
 }
 
-/* Blue circle + for expandable rows */
+/* Sneat-style small circle with white outer ring */
 td.control::after {
   content: "+";
   position: absolute;
-  left: 12px;
+  left: 16px;
   top: 50%;
   transform: translateY(-50%);
-  width: 22px;
-  height: 22px;
+
+  width: 16px;
+  height: 16px;
+
   border-radius: 50%;
   background: #696cff;
   color: #fff;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+
+  font-size: 11px;
   font-weight: 700;
+
+  /* White outer ring */
+  box-shadow: 0 0 0 2px #fff;
+
+  transition: all 0.2s ease;
 }
 
-/* When row expanded → minus */
+/* Expanded state */
 tr.dtr-expanded td.control::after {
   content: "−";
 }
 
-/* Perfect spacing between controls and table */
+/* Optional smooth hover like Sneat */
+td.control:hover::after {
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* ================= DATATABLE SPACING ================= */
+
 .dataTables_wrapper .row:first-child {
   margin-bottom: 1.25rem !important;
 }
@@ -318,6 +333,7 @@ tr.dtr-expanded td.control::after {
 }
 
 /* ================= MOBILE FIX ================= */
+
 @media (max-width: 768px) {
   .dataTables_wrapper .row:first-child {
     margin-bottom: 1.5rem !important;
@@ -331,6 +347,7 @@ tr.dtr-expanded td.control::after {
 /* ===================================================== */
 /* ================= CUSTOM MODAL ====================== */
 /* ===================================================== */
+
 .custom-modal-backdrop {
   position: fixed;
   top: 0;
@@ -354,7 +371,6 @@ tr.dtr-expanded td.control::after {
   box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
 }
 
-/* Close button */
 .custom-close {
   position: absolute;
   top: 10px;
@@ -365,14 +381,12 @@ tr.dtr-expanded td.control::after {
   cursor: pointer;
 }
 
-/* Modal title */
 .modal-title {
   font-weight: 600;
   margin-bottom: 1rem;
   font-family: "Public Sans", sans-serif;
 }
 
-/* Detail rows */
 .details-row {
   padding: 0.55rem 0;
   border-bottom: 1px solid #eceef1;
@@ -393,6 +407,7 @@ tr.dtr-expanded td.control::after {
 /* ===================================================== */
 /* ================= STATUS BADGE ====================== */
 /* ===================================================== */
+
 .status-badge {
   display: inline-flex;
   align-items: center;
@@ -406,7 +421,6 @@ tr.dtr-expanded td.control::after {
   min-width: 50px;
   text-align: center;
 }
-
 .footer-link {
   text-decoration: none !important;
   color: inherit;

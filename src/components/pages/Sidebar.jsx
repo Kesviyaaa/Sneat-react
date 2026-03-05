@@ -1,13 +1,133 @@
-import React from "react";
-import logo from "../../assets/sneat.svg";
+import { useState, useEffect } from "react";import logo from "../../assets/sneat.svg";
 import "../css/sidebar.css";
-import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "boxicons/css/boxicons.min.css";
 
 const Sidebar = ({ collapsed, toggleSidebar, setWrapperHover }) => {
-  const [hovered, setHovered] = useState(false);
   const location = useLocation();
+
+  // ✅ STATE FIRST
+  const [hovered, setHovered] = useState(false);
+  const [openMenu, setOpenMenu] = useState(null);
+  const [openSubMenu, setOpenSubMenu] = useState(null);
+  const [openSubSubMenu, setOpenSubSubMenu] = useState(null);
+  
+
+  // ✅ THEN computed values
+  const isDashboardActive =
+  location.pathname === "/analytics" ||
+  location.pathname === "/crm" ||
+  location.pathname === "/ecommerce" ||  // only exact match
+  location.pathname === "/logistics" ||
+  location.pathname === "/academy";
+
+  useEffect(() => {
+  if (isDashboardActive) setOpenMenu("dashboards");
+  else if (isLayoutsActive) setOpenMenu("layouts");
+  else if (isFrontPagesActive) setOpenMenu("front-pages");
+  else if (isEcommerceActive) setOpenMenu("e-commerce");
+}, [location.pathname]);
+
+  const isLayoutsActive =
+  location.pathname.startsWith("/layouts/collapsed-menu") ||
+  location.pathname.startsWith("/layouts/content-navbar") ||
+  location.pathname.startsWith("/layouts/content-navbar-sidebar") ||
+  location.pathname.startsWith("/layouts/without-menu") ||
+  location.pathname.startsWith("/layouts/without-navbar") ||
+  location.pathname.startsWith("/layouts/fluid") ||
+  location.pathname.startsWith("/layouts/container") ||
+  location.pathname.startsWith("/layouts/blank");
+
+  useEffect(() => {
+    if (isLayoutsActive) {
+      setOpenMenu("layouts");
+    }
+  }, [location.pathname]);
+
+
+  const isFrontPagesActive =
+  location.pathname.startsWith("/landing") ||
+  location.pathname.startsWith("/pricing") ||
+  location.pathname.startsWith("/payment") ||
+  location.pathname.startsWith("/checkout") ||
+  location.pathname.startsWith("/help-center");
+
+  useEffect(() => {
+    if (isFrontPagesActive) {
+      setOpenMenu("front-pages");
+    }
+  }, [location.pathname]);
+
+
+
+
+  const isEcommerceActive =
+  location.pathname.startsWith("/ecommerce/dashboard") ||
+  location.pathname.startsWith("/product") ||
+  location.pathname.startsWith("/order") ||
+  location.pathname.startsWith("/customer") ||
+  location.pathname.startsWith("/reviews") ||
+  location.pathname.startsWith("/referral") ||
+  location.pathname.startsWith("/settings");
+
+  const isProductsActive = location.pathname.startsWith("/product");
+  const isOrderActive = location.pathname.startsWith("/order");
+  const isCustomerActive = location.pathname.startsWith("/customer");
+  const isCustomerDetailsActive = location.pathname.startsWith("/customer/details");
+  const isSettingsActive = location.pathname.startsWith("/settings");
+
+  useEffect(() => {
+    if (isEcommerceActive) setOpenMenu("e-commerce");
+    if (isProductsActive) setOpenSubMenu("products");
+    if (isOrderActive) setOpenSubMenu("order");
+    if (isCustomerActive) setOpenSubMenu("customer");
+    if (isCustomerDetailsActive) setOpenSubSubMenu("customer-details");
+    if (isSettingsActive) setOpenSubMenu("settings");
+  }, [location.pathname]);
+
+
+
+  const isStoreDetails = location.pathname === "/settings/store-details";
+  const isPayments = location.pathname === "/settings/payments";
+  const isCheckout = location.pathname === "/settings/checkout";
+  const isShipping = location.pathname === "/settings/shipping";
+  const isLocations = location.pathname === "/settings/locations";
+  const isNotifications = location.pathname === "/settings/notifications";
+
+  useEffect(() => {
+    if (isSettingsActive) {
+      setOpenMenu("e-commerce");       // open eCommerce
+      setOpenSubMenu("settings");      // open Settings submenu
+    }
+  }, [location.pathname]);
+
+
+  const [activeAcademyItem, setActiveAcademyItem] = useState(null);
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // ✅ Hover to temporarily expand
   const handleMouseEnter = () => {
@@ -24,9 +144,6 @@ const Sidebar = ({ collapsed, toggleSidebar, setWrapperHover }) => {
     }
   };
 
-  const [openMenu, setOpenMenu] = useState(null);
-  const [openSubMenu, setOpenSubMenu] = useState(null);
-  const [openSubSubMenu, setOpenSubSubMenu] = useState(null);
 
   return (
     
@@ -100,402 +217,496 @@ const Sidebar = ({ collapsed, toggleSidebar, setWrapperHover }) => {
       {/* Menu Items */}
       <ul className="menu-inner py-1">
         {/* Dashboards */}
-        <li className={`menu-item ${openMenu === "dashboards" ? "open" : ""}`}>
-        <a
-  href="#"
-  className="menu-link menu-toggle text-decoration-none"
-  aria-expanded={openMenu === "dashboards"}
-  onClick={(e) => {
-    e.preventDefault();
-    setOpenMenu(openMenu === "dashboards" ? null : "dashboards");
-  }}
+        <li
+  className={`menu-item 
+    ${openMenu === "dashboards" ? "open" : ""} 
+    ${isDashboardActive ? "active" : ""}`}
 >
-            <i className="menu-icon icon-base bx bx-home-smile text-decoration-none"></i>
-            <div className="menu-text">Dashboards</div>
-          <div className="badge text-bg-danger rounded-pill ms-auto">5</div>          </a>
-          <ul className="menu-sub">
-          <li className="menu-item">
-            <Link to="/analytics" className="menu-link text-decoration-none">
-              <i ></i>
-              <div className="menu-text">Analytics</div>
-            </Link>
-          </li>
-            <li className="menu-item">
-              <a href="dashboards-crm.html" className="menu-link text-decoration-none">
-                <div className="menu-text">CRM</div>
-              </a>
-            </li>
-            <li className="menu-item active">
-              <a href="app-ecommerce-dashboard.html" className="menu-link text-decoration-none">
-                <div className="menu-text">eCommerce</div>
-              </a>
-            </li>
-            <li className="menu-item">
-              <a href="app-logistics-dashboard.html" className="menu-link text-decoration-none">
-                <div className="menu-text">Logistics</div>
-              </a>
-            </li>
-            <li className="menu-item">
-              <a href="app-academy-dashboard.html" className="menu-link text-decoration-none">
-                <div className="menu-text">Academy</div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        
-        <li className={`menu-item ${openMenu === "layouts" ? "open" : ""}`}>
-            <a
-              href="#"
-              className="menu-link menu-toggle text-decoration-none"
-              aria-expanded={openMenu === "layouts"}
-              onClick={(e) => {
-                e.preventDefault();
-                setOpenMenu(openMenu === "layouts" ? null : "layouts");
-              }}
-            >
-              <i className="menu-icon icon-base bx bx-layout"></i>
-              <div className="menu-text">Layouts</div>
-            </a>
+  <a
+    href="#"
+    className="menu-link menu-toggle text-decoration-none"
+    aria-expanded={openMenu === "dashboards"}
+    onClick={(e) => {
+      e.preventDefault();
+      setOpenMenu(openMenu === "dashboards" ? null : "dashboards");
+    }}
+  >
+    <i className="menu-icon icon-base bx bx-home-smile"></i>
+    <div className="menu-text">Dashboards</div>
+    <div className="badge text-bg-danger rounded-pill ms-auto">5</div>
+  </a>
 
-            <ul className="menu-sub">
-              <li className="menu-item">
-                <a href="layouts-collapsed-menu.html" className="menu-link text-decoration-none">
-                  <div className="menu-text">Collapsed menu</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a href="layouts-content-navbar.html" className="menu-link text-decoration-none">
-                  <div className="menu-text">Content navbar</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a href="layouts-content-navbar-with-sidebar.html" className="menu-link text-decoration-none">
-                  <div className="menu-text">Content nav + Sidebar</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a href="../horizontal-menu-template/" className="menu-link text-decoration-none" target="_blank" rel="noreferrer">
-                  <div className="menu-text">Horizontal</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a href="layouts-without-menu.html" className="menu-link text-decoration-none">
-                  <div className="menu-text">Without menu</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a href="layouts-without-navbar.html" className="menu-link text-decoration-none">
-                  <div className="menu-text">Without navbar</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a href="layouts-fluid.html" className="menu-link text-decoration-none">
-                  <div className="menu-text">Fluid</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a href="layouts-container.html" className="menu-link text-decoration-none">
-                  <div className="menu-text">Container</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a href="layouts-blank.html" className="menu-link text-decoration-none">
-                  <div className="menu-text">Blank</div>
-                </a>
-              </li>
-            </ul>
-          </li>
+  <ul className="menu-sub">
+    
+    <li className={`menu-item ${location.pathname === "/analytics" ? "active" : ""}`}>
+      <Link to="/analytics" className="menu-link text-decoration-none">
+        <div className="menu-text">Analytics</div>
+      </Link>
+    </li>
+
+    <li className={`menu-item ${location.pathname === "/crm" ? "active" : ""}`}>
+      <Link to="/crm" className="menu-link text-decoration-none">
+        <div className="menu-text">CRM</div>
+      </Link>
+    </li>
+
+    <li className={`menu-item ${location.pathname === "/ecommerce" ? "active" : ""}`}>
+      <Link to="/ecommerce" className="menu-link text-decoration-none">
+        <div className="menu-text">eCommerce</div>
+      </Link>
+    </li>
+
+    <li className={`menu-item ${location.pathname === "/logistics" ? "active" : ""}`}>
+      <Link to="/logistics" className="menu-link text-decoration-none">
+        <div className="menu-text">Logistics</div>
+      </Link>
+    </li>
+
+    <li className={`menu-item ${location.pathname === "/academy" ? "active" : ""}`}>
+      <Link to="/academy" className="menu-link text-decoration-none">
+        <div className="menu-text">Academy</div>
+      </Link>
+    </li>
+
+  </ul>
+</li>
+        
+<li
+  className={`menu-item 
+    ${openMenu === "layouts" ? "open" : ""} 
+    ${isLayoutsActive ? "active" : ""}`}
+>
+  <a
+    href="#"
+    className="menu-link menu-toggle text-decoration-none"
+    aria-expanded={openMenu === "layouts"}
+    onClick={(e) => {
+      e.preventDefault();
+      setOpenMenu(openMenu === "layouts" ? null : "layouts");
+    }}
+  >
+    <i className="menu-icon icon-base bx bx-layout"></i>
+    <div className="menu-text">Layouts</div>
+  </a>
+
+  <ul className="menu-sub">
+
+    <li className={`menu-item ${location.pathname === "/collapsed-menu" ? "active" : ""}`}>
+      <Link to="/collapsed-menu" className="menu-link text-decoration-none">
+        <div className="menu-text">Collapsed menu</div>
+      </Link>
+    </li>
+
+    <li className={`menu-item ${location.pathname === "/content-navbar" ? "active" : ""}`}>
+      <Link to="/content-navbar" className="menu-link text-decoration-none">
+        <div className="menu-text">Content navbar</div>
+      </Link>
+    </li>
+
+    <li className={`menu-item ${location.pathname === "/content-navbar-sidebar" ? "active" : ""}`}>
+      <Link to="/content-navbar-sidebar" className="menu-link text-decoration-none">
+        <div className="menu-text">Content nav + Sidebar</div>
+      </Link>
+    </li>
+
+    <li className={`menu-item ${location.pathname === "/without-menu" ? "active" : ""}`}>
+      <Link to="/without-menu" className="menu-link text-decoration-none">
+        <div className="menu-text">Without menu</div>
+      </Link>
+    </li>
+
+    <li className={`menu-item ${location.pathname === "/without-navbar" ? "active" : ""}`}>
+      <Link to="/without-navbar" className="menu-link text-decoration-none">
+        <div className="menu-text">Without navbar</div>
+      </Link>
+    </li>
+
+    <li className={`menu-item ${location.pathname === "/fluid" ? "active" : ""}`}>
+      <Link to="/fluid" className="menu-link text-decoration-none">
+        <div className="menu-text">Fluid</div>
+      </Link>
+    </li>
+
+    <li className={`menu-item ${location.pathname === "/container" ? "active" : ""}`}>
+      <Link to="/container" className="menu-link text-decoration-none">
+        <div className="menu-text">Container</div>
+      </Link>
+    </li>
+
+    <li className={`menu-item ${location.pathname === "/blank" ? "active" : ""}`}>
+      <Link to="/blank" className="menu-link text-decoration-none">
+        <div className="menu-text">Blank</div>
+      </Link>
+    </li>
+
+  </ul>
+</li>
 
       {/* Front Pages */}
-      <li className={`menu-item ${openMenu === "front-pages" ? "open" : ""}`}>
-      <a
-              href="#"
-              className="menu-link menu-toggle text-decoration-none"
-              aria-expanded={openMenu === "front-pages"}
-              onClick={(e) => {
-                e.preventDefault();
-                setOpenMenu(openMenu === "front-pages" ? null : "front-pages");
-              }}
-            >
-          <i className="menu-icon icon-base bx bx-store"></i>
-          <div className="menu-text">Front Pages</div>
-        </a>
-        <ul className="menu-sub">
-          <li className="menu-item">
-            <a href="../front-pages/landing-page.html" className="menu-link text-decoration-none" target="_blank">
-              <div className="menu-text">Landing</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a href="../front-pages/pricing-page.html" className="menu-link text-decoration-none" target="_blank">
-              <div className="menu-text">Pricing</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a href="../front-pages/payment-page.html" className="menu-link text-decoration-none" target="_blank">
-              <div className="menu-text">Payment</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a href="../front-pages/checkout-page.html" className="menu-link text-decoration-none" target="_blank">
-              <div className="menu-text">Checkout</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a href="../front-pages/help-center-landing.html" className="menu-link text-decoration-none" target="_blank">
-              <div className="menu-text">Help Center</div>
-            </a>
-          </li>
-        </ul>
-      </li>
+      <li
+  className={`menu-item 
+    ${openMenu === "front-pages" ? "open" : ""} 
+    ${isFrontPagesActive ? "active" : ""}`}
+>
+  <a
+    href="#"
+    className="menu-link menu-toggle text-decoration-none"
+    aria-expanded={openMenu === "front-pages"}
+    onClick={(e) => {
+      e.preventDefault();
+      setOpenMenu(openMenu === "front-pages" ? null : "front-pages");
+    }}
+  >
+    <i className="menu-icon icon-base bx bx-store"></i>
+    <div className="menu-text">Front Pages</div>
+  </a>
+
+  <ul className="menu-sub">
+
+    <li className={`menu-item ${location.pathname === "/landing" ? "active" : ""}`}>
+      <Link to="/landing" className="menu-link text-decoration-none">
+        <div className="menu-text">Landing</div>
+      </Link>
+    </li>
+
+    <li className={`menu-item ${location.pathname === "/pricing" ? "active" : ""}`}>
+      <Link to="/pricing" className="menu-link text-decoration-none">
+        <div className="menu-text">Pricing</div>
+      </Link>
+    </li>
+
+    <li className={`menu-item ${location.pathname === "/payment" ? "active" : ""}`}>
+      <Link to="/payment" className="menu-link text-decoration-none">
+        <div className="menu-text">Payment</div>
+      </Link>
+    </li>
+
+    <li className={`menu-item ${location.pathname === "/checkout" ? "active" : ""}`}>
+      <Link to="/checkout" className="menu-link text-decoration-none">
+        <div className="menu-text">Checkout</div>
+      </Link>
+    </li>
+
+    <li className={`menu-item ${location.pathname === "/help-center" ? "active" : ""}`}>
+      <Link to="/help-center" className="menu-link text-decoration-none">
+        <div className="menu-text">Help Center</div>
+      </Link>
+    </li>
+
+  </ul>
+</li>
 
       {/* Apps & Pages */}
       <li className="menu-header small">
         <span className="menu-header-text" data-i18n="Apps & Pages">Apps &amp; Pages</span>
       </li>
-      <li className="menu-item">
-        <a href="app-email.html" className="menu-link text-decoration-none">
-          <i className="menu-icon icon-base bx bx-envelope"></i>
-          <div className="menu-text">Email</div>
-        </a>
-      </li>
-      <li className="menu-item">
-        <a href="app-chat.html" className="menu-link text-decoration-none">
-          <i className="menu-icon icon-base bx bx-chat"></i>
-          <div className="menu-text">Chat</div>
-        </a>
-      </li>
-      <li className="menu-item">
-        <a href="app-calendar.html" className="menu-link text-decoration-none">
-          <i className="menu-icon icon-base bx bx-calendar"></i>
-          <div className="menu-text">Calendar</div>
-        </a>
-      </li>
-      <li className="menu-item">
-        <a href="app-kanban.html" className="menu-link text-decoration-none">
-          <i className="menu-icon icon-base bx bx-grid"></i>
-          <div className="menu-text">Kanban</div>
-        </a>
-      </li>
+      <li className={`menu-item ${location.pathname === "/email" ? "active" : ""}`}>
+  <Link to="/email" className="menu-link text-decoration-none">
+    <i className="menu-icon icon-base bx bx-envelope"></i>
+    <div className="menu-text">Email</div>
+  </Link>
+</li>
+
+<li className={`menu-item ${location.pathname === "/chat" ? "active" : ""}`}>
+  <Link to="/chat" className="menu-link text-decoration-none">
+    <i className="menu-icon icon-base bx bx-chat"></i>
+    <div className="menu-text">Chat</div>
+  </Link>
+</li>
+
+<li className={`menu-item ${location.pathname === "/calendar" ? "active" : ""}`}>
+  <Link to="/calendar" className="menu-link text-decoration-none">
+    <i className="menu-icon icon-base bx bx-calendar"></i>
+    <div className="menu-text">Calendar</div>
+  </Link>
+</li>
+
+<li className={`menu-item ${location.pathname === "/kanban" ? "active" : ""}`}>
+  <Link to="/kanban" className="menu-link text-decoration-none">
+    <i className="menu-icon icon-base bx bx-grid"></i>
+    <div className="menu-text">Kanban</div>
+  </Link>
+</li>
       {/* e-commerce-app menu start */}
-      <li className={`menu-item ${openMenu === "e-commerce" ? "open" : ""}`}>
-      <a
-              href="#"
-              className="menu-link menu-toggle text-decoration-none"
-              aria-expanded={openMenu === "e-commerce"}
-              onClick={(e) => {
-                e.preventDefault();
-                setOpenMenu(openMenu === "e-commerce" ? null : "e-commerce");
-              }}
-            >
+      <li
+        className={`menu-item 
+          ${openMenu === "e-commerce" ? "open" : ""} 
+          ${isEcommerceActive ? "active" : ""}`}
+      >
+        <a
+          href="#"
+          className="menu-link menu-toggle text-decoration-none"
+          onClick={(e) => {
+            e.preventDefault();
+            setOpenMenu(openMenu === "e-commerce" ? null : "e-commerce");
+          }}
+        >
           <i className="menu-icon icon-base bx bx-store"></i>
           <div className="menu-text">eCommerce</div>
         </a>
+
         <ul className="menu-sub">
-          <li className="menu-item">
-            <a href="app-ecommerce-dashboard.html" className="menu-link text-decoration-none">
-              <div className="menu-text">Dashboard</div>
-            </a>
-          </li>
-          <li className={`menu-item ${openSubMenu === "products" ? "open" : ""}`}>
-              <a
-                href="#"
-                className="menu-link menu-toggle text-decoration-none"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setOpenSubMenu(openSubMenu === "products" ? null : "products");
-                  setOpenSubSubMenu(null);
-                }}
-              >
-                <div className="menu-text">Products</div>
-              </a>
-            <ul className="menu-sub">
-              <li className="menu-item">
-                <a href="app-ecommerce-product-list.html" className="menu-link text-decoration-none">
-                  <div className="menu-text">Product List</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a href="app-ecommerce-product-add.html" className="menu-link text-decoration-none">
-                  <div className="menu-text">Add Product</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a href="app-ecommerce-category-list.html" className="menu-link text-decoration-none">
-                  <div className="menu-text">Category List</div>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li className={`menu-item ${openSubMenu === "order" ? "open" : ""}`}>
-              <a
-                href="#"
-                className="menu-link menu-toggle text-decoration-none"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setOpenSubMenu(openSubMenu === "order" ? null : "order");
-                }}
-              >
-                <div className="menu-text">Order</div>
-              </a>
-            <ul className="menu-sub">
-              <li className="menu-item">
-                <a href="app-ecommerce-order-list.html" className="menu-link text-decoration-none">
-                  <div className="menu-text">Order List</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a href="app-ecommerce-order-details.html" className="menu-link text-decoration-none">
-                  <div className="menu-text">Order Details</div>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li className={`menu-item ${openSubMenu === "customer" ? "open" : ""}`}>
+        <li className={`menu-item ${location.pathname === "/ecommerce/dashboard" ? "active" : ""}`}>
+          <Link to="/ecommerce/dashboard" className="menu-link text-decoration-none">
+            <div className="menu-text">Dashboard</div>
+          </Link>
+        </li>
+        <li
+            className={`menu-item 
+              ${openSubMenu === "products" ? "open" : ""} 
+              ${isProductsActive ? "active" : ""}`}
+          >
             <a
               href="#"
               className="menu-link menu-toggle text-decoration-none"
               onClick={(e) => {
                 e.preventDefault();
-                e.stopPropagation();
+                setOpenSubMenu(openSubMenu === "products" ? null : "products");
+              }}
+            >
+              <div className="menu-text">Products</div>
+            </a>
 
+            <ul className="menu-sub">
+              <li className={`menu-item ${location.pathname === "/product/list" ? "active" : ""}`}>
+                <Link to="/product/list" className="menu-link text-decoration-none">
+                  <div className="menu-text">Product List</div>
+                </Link>
+              </li>
+
+              <li className={`menu-item ${location.pathname === "/product/add" ? "active" : ""}`}>
+                <Link to="/product/add" className="menu-link text-decoration-none">
+                  <div className="menu-text">Add Product</div>
+                </Link>
+              </li>
+
+              <li className={`menu-item ${location.pathname === "/product/category" ? "active" : ""}`}>
+                <Link to="/product/category" className="menu-link text-decoration-none">
+                  <div className="menu-text">Category List</div>
+                </Link>
+              </li>
+            </ul>
+          </li>
+          <li
+            className={`menu-item 
+              ${openSubMenu === "order" ? "open" : ""} 
+              ${isOrderActive ? "active" : ""}`}
+          >
+            <a
+              href="#"
+              className="menu-link menu-toggle text-decoration-none"
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenSubMenu(openSubMenu === "order" ? null : "order");
+              }}
+            >
+              <div className="menu-text">Order</div>
+            </a>
+
+            <ul className="menu-sub">
+              <li className={`menu-item ${location.pathname === "/order/list" ? "active" : ""}`}>
+                <Link to="/order/list" className="menu-link text-decoration-none">
+                  <div className="menu-text">Order List</div>
+                </Link>
+              </li>
+
+              <li className={`menu-item ${location.pathname === "/order/details" ? "active" : ""}`}>
+                <Link to="/order/details" className="menu-link text-decoration-none">
+                  <div className="menu-text">Order Details</div>
+                </Link>
+              </li>
+            </ul>
+          </li>
+          <li
+            className={`menu-item 
+              ${openSubMenu === "customer" ? "open" : ""} 
+              ${isCustomerActive ? "active" : ""}`}
+          >
+            <a
+              href="#"
+              className="menu-link menu-toggle text-decoration-none"
+              onClick={(e) => {
+                e.preventDefault();
                 setOpenSubMenu(openSubMenu === "customer" ? null : "customer");
-                setOpenSubSubMenu(null); // ✅ important reset
               }}
             >
               <div className="menu-text">Customer</div>
             </a>
+
             <ul className="menu-sub">
-              <li className="menu-item">
-                <a href="app-ecommerce-customer-all.html" className="menu-link text-decoration-none ">
+
+              <li className={`menu-item ${location.pathname === "/customer/all" ? "active" : ""}`}>
+                <Link to="/customer/all" className="menu-link text-decoration-none">
                   <div className="menu-text">All Customers</div>
-                </a>
+                </Link>
               </li>
-              <li className={`menu-item ${openSubSubMenu === "customer-details" ? "open" : ""}`}>
+
+              <li
+                className={`menu-item 
+                  ${openSubSubMenu === "customer-details" ? "open" : ""} 
+                  ${isCustomerDetailsActive ? "active" : ""}`}
+              >
                 <a
                   href="#"
                   className="menu-link menu-toggle text-decoration-none"
                   onClick={(e) => {
                     e.preventDefault();
-                    e.stopPropagation();
-
-                    setOpenSubSubMenu(prev =>
-                      prev === "customer-details" ? null : "customer-details"
+                    setOpenSubSubMenu(
+                      openSubSubMenu === "customer-details" ? null : "customer-details"
                     );
                   }}
                 >
                   <div className="menu-text">Customer Details</div>
                 </a>
+
                 <ul className="menu-sub">
-                  <li className="menu-item">
-                    <a href="app-ecommerce-customer-details-overview.html" className="menu-link text-decoration-none">
+                  <li className={`menu-item ${location.pathname === "/customer/details/overview" ? "active" : ""}`}>
+                    <Link to="/customer/details/overview" className="menu-link text-decoration-none">
                       <div className="menu-text">Overview</div>
-                    </a>
+                    </Link>
                   </li>
-                  <li className="menu-item">
-                    <a href="app-ecommerce-customer-details-security.html" className="menu-link text-decoration-none">
+
+                  <li className={`menu-item ${location.pathname === "/customer/details/security" ? "active" : ""}`}>
+                    <Link to="/customer/details/security" className="menu-link text-decoration-none">
                       <div className="menu-text">Security</div>
-                    </a>
+                    </Link>
                   </li>
-                  <li className="menu-item">
-                    <a href="app-ecommerce-customer-details-billing.html" className="menu-link text-decoration-none">
+
+                  <li className={`menu-item ${location.pathname === "/customer/details/billing" ? "active" : ""}`}>
+                    <Link to="/customer/details/billing" className="menu-link text-decoration-none">
                       <div className="menu-text">Address & Billing</div>
-                    </a>
+                    </Link>
                   </li>
-                  <li className="menu-item">
-                    <a href="app-ecommerce-customer-details-notifications.html" className="menu-link text-decoration-none">
+
+                  <li className={`menu-item ${location.pathname === "/customer/details/notifications" ? "active" : ""}`}>
+                    <Link to="/customer/details/notifications" className="menu-link text-decoration-none">
                       <div className="menu-text">Notifications</div>
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </li>
             </ul>
           </li>
-          <li className="menu-item">
-            <a href="app-ecommerce-manage-reviews.html" className="menu-link text-decoration-none">
+          <li className={`menu-item ${location.pathname === "/reviews" ? "active" : ""}`}>
+            <Link to="/reviews" className="menu-link text-decoration-none">
               <div className="menu-text">Manage Reviews</div>
-            </a>
+            </Link>
           </li>
-          <li className="menu-item">
-            <a href="app-ecommerce-referral.html" className="menu-link text-decoration-none">
+
+          <li className={`menu-item ${location.pathname === "/referral" ? "active" : ""}`}>
+            <Link to="/referral" className="menu-link text-decoration-none">
               <div className="menu-text">Referrals</div>
-            </a>
+            </Link>
           </li>
-          <li className="menu-item">
-            <a href="javascript:void(0);" className="menu-link menu-toggle text-decoration-none">
-              <div className="menu-text">Settings</div>
-            </a>
-            <ul className="menu-sub">
-              <li className="menu-item">
-                <a href="app-ecommerce-settings-detail.html" className="menu-link">
-                  <div className="menu-text">Store Details</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a href="app-ecommerce-settings-payments.html" className="menu-link">
-                  <div className="menu-text">Payments</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a href="app-ecommerce-settings-checkout.html" className="menu-link">
-                  <div className="menu-text">Checkout</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a href="app-ecommerce-settings-shipping.html" className="menu-link">
-                  <div className="menu-text">Shipping & Delivery</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a href="app-ecommerce-settings-locations.html" className="menu-link">
-                  <div className="menu-text">Locations</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a href="app-ecommerce-settings-notifications.html" className="menu-link">
-                  <div className="menu-text">Notifications</div>
-                </a>
-              </li>
-            </ul>
-          </li>
+          <li
+              className={`menu-item 
+                ${openSubMenu === "settings" ? "open" : ""} 
+                ${isSettingsActive ? "active" : ""}`}
+            >
+              <a
+                href="#"
+                className="menu-link menu-toggle text-decoration-none"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOpenSubMenu(openSubMenu === "settings" ? null : "settings");
+                }}
+              >
+                <div className="menu-text">Settings</div>
+              </a>
+
+              <ul className="menu-sub">
+
+                <li className={`menu-item ${isStoreDetails ? "active" : ""}`}>
+                  <Link to="/settings/store-details" className="menu-link text-decoration-none">
+                    <div className="menu-text">Store Details</div>
+                  </Link>
+                </li>
+
+                <li className={`menu-item ${isPayments ? "active" : ""}`}>
+                  <Link to="/settings/payments" className="menu-link text-decoration-none">
+                    <div className="menu-text">Payments</div>
+                  </Link>
+                </li>
+
+                <li className={`menu-item ${isCheckout ? "active" : ""}`}>
+                  <Link to="/settings/checkout" className="menu-link text-decoration-none">
+                    <div className="menu-text">Checkout</div>
+                  </Link>
+                </li>
+
+                <li className={`menu-item ${isShipping ? "active" : ""}`}>
+                  <Link to="/settings/shipping" className="menu-link text-decoration-none">
+                    <div className="menu-text">Shipping & Delivery</div>
+                  </Link>
+                </li>
+
+                <li className={`menu-item ${isLocations ? "active" : ""}`}>
+                  <Link to="/settings/locations" className="menu-link text-decoration-none">
+                    <div className="menu-text">Locations</div>
+                  </Link>
+                </li>
+
+                <li className={`menu-item ${isNotifications ? "active" : ""}`}>
+                  <Link to="/settings/notifications" className="menu-link text-decoration-none">
+                    <div className="menu-text">Notifications</div>
+                  </Link>
+                </li>
+
+              </ul>
+            </li>
         </ul>
       </li>
       {/* e-commerce-app menu end */}
       {/* Academy menu start */}
-        <li className={`menu-item ${openMenu === "academy" ? "open" : ""}`}>
-          <a
-            href="#"
-            className="menu-link menu-toggle text-decoration-none"
-            aria-expanded={openMenu === "academy"}
-            onClick={(e) => {
-              e.preventDefault();
-              setOpenMenu(openMenu === "academy" ? null : "academy");
-              setOpenSubMenu(null); // optional but recommended
-              setOpenSubSubMenu(null); // optional but recommended
-            }}
-          >
-            <i className="menu-icon icon-base bx bx-book-open"></i>
-            <div className="menu-text">Academy</div>
-          </a>
+      <li
+  className={`menu-item 
+    ${openMenu === "academy" ? "open" : ""} 
+    ${activeAcademyItem ? "active" : ""}`}
+>
+  <a
+    href="#"
+    className="menu-link menu-toggle text-decoration-none"
+    onClick={(e) => {
+      e.preventDefault();
+      setOpenMenu(openMenu === "academy" ? null : "academy");
+      setActiveAcademyItem(null); // optional reset
+    }}
+  >
+    <i className="menu-icon icon-base bx bx-book-open"></i>
+    <div className="menu-text">Academy</div>
+  </a>
 
-          <ul className="menu-sub">
-            <li className="menu-item">
-              <a href="app-academy-dashboard.html" className="menu-link text-decoration-none">
-                <div className="menu-text">Dashboard</div>
-              </a>
-            </li>
-            <li className="menu-item">
-              <a href="app-academy-course.html" className="menu-link text-decoration-none">
-                <div className="menu-text">My Course</div>
-              </a>
-            </li>
-            <li className="menu-item">
-              <a href="app-academy-course-details.html" className="menu-link text-decoration-none">
-                <div className="menu-text">Course Details</div>
-              </a>
-            </li>
-          </ul>
-        </li>
+  <ul className="menu-sub">
+
+    <li
+      className={`menu-item ${activeAcademyItem === "dashboard" ? "active" : ""}`}
+      onClick={() => setActiveAcademyItem("dashboard")}
+    >
+      <a href="#" className="menu-link text-decoration-none">
+        <div className="menu-text">Dashboard</div>
+      </a>
+    </li>
+
+    <li
+      className={`menu-item ${activeAcademyItem === "course" ? "active" : ""}`}
+      onClick={() => setActiveAcademyItem("course")}
+    >
+      <a href="#" className="menu-link text-decoration-none">
+        <div className="menu-text">My Course</div>
+      </a>
+    </li>
+
+    <li
+      className={`menu-item ${activeAcademyItem === "course-details" ? "active" : ""}`}
+      onClick={() => setActiveAcademyItem("course-details")}
+    >
+      <a href="#" className="menu-link text-decoration-none">
+        <div className="menu-text">Course Details</div>
+      </a>
+    </li>
+
+  </ul>
+</li>
         {/* Academy menu end */}
       {/* Logistics menu start */}
       <li className={`menu-item ${openMenu === "logistics" ? "open" : ""}`}>
