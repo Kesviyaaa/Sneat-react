@@ -14,6 +14,8 @@ const Navbar = ({ collapsed, hovered }) => {
   const [userOpen, setUserOpen] = useState(false);
   const userRef = useRef(null);
 
+  
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (userRef.current && !userRef.current.contains(e.target)) {

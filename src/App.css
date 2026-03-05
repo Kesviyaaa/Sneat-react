@@ -2,7 +2,21 @@
 
 
 /* ================= ADVANCED SEARCH ================= */
+/* ===== Page Background ===== */
+body {
+  background-color: rgb(244, 244, 248);
+}
 
+/* Layout wrapper */
+.layout-wrapper {
+  background-color: rgb(244, 244, 248);
+  min-height: 100vh;
+}
+
+/* Content wrapper */
+.layout-page {
+  background-color: rgb(244, 244, 248);
+}
 .dt_adv_search .form-control {
   height: 38px;
 }
@@ -327,3 +341,4 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td.control::before {
   min-width: 50px;                   /* optional: keep consistent width */
   text-align: center;   
 }
+

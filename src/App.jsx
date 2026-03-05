@@ -37,6 +37,7 @@ function App() {
 
           {/* Main page */}
           <div className="layout-page">
+          <div className="top-blur"></div>
             <Navbar collapsed={collapsed} />
 
             <div className="content-wrapper">

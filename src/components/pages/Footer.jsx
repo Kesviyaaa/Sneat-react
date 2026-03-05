@@ -12,7 +12,7 @@ const Footer = () => {
                 href="https://themeselection.com"
                 target="_blank"
                 rel="noreferrer"
-                className="footer-link"
+                className="footer-link "
               >
                 ThemeSelection
               </a>
