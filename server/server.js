@@ -33,6 +33,81 @@ app.get("/employees", async (req, res) => {
   });
 });
 
+/* ✅ Add Employee */
+app.post("/employees", async (req, res) => {
+  try {
+
+    const newEmployee = new Employee({
+      name: req.body.name,
+      email: req.body.email,
+      post: req.body.post,
+      city: req.body.city,
+      date_joined: req.body.date_joined,
+      salary: req.body.salary
+    });
+
+    const savedEmployee = await newEmployee.save();
+
+    res.json({
+      success: true,
+      data: savedEmployee
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+});
+
+app.delete("/employees/:id", async (req, res) => {
+
+  try {
+
+    await Employee.findByIdAndDelete(req.params.id);
+
+    res.json({
+      success: true
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+
+  }
+
+});
+
+app.put("/employees/:id", async (req, res) => {
+
+  try {
+
+    const updated = await Employee.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+
+    res.json({
+      success: true,
+      data: updated
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+
+  }
+
+});
+
 /* ✅ Start server */
 app.listen(5000, () => {
   console.log("Server running on port 5000");

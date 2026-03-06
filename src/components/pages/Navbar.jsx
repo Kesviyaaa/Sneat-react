@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "../css/navbar.css";
 
 const Navbar = ({ collapsed, hovered }) => {
@@ -13,7 +14,10 @@ const Navbar = ({ collapsed, hovered }) => {
   const notifRef = useRef(null);
   const [userOpen, setUserOpen] = useState(false);
   const userRef = useRef(null);
-
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [results, setResults] = useState([]);
+  const searchInputRef = useRef(null);
+  const [theme, setTheme] = useState("light");
   
 
   useEffect(() => {
@@ -109,21 +113,111 @@ useEffect(() => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleThemeChange = (theme) => {
+  const handleThemeChange = (selectedTheme) => {
     const body = document.body;
+  
     body.classList.remove("theme-light", "theme-dark", "theme-system");
-    if (theme === "system") body.classList.add("theme-system");
-    else if (theme === "light") body.classList.add("theme-light");
-    else body.classList.add("theme-dark");
+    body.classList.add(`theme-${selectedTheme}`);
+  
+    localStorage.setItem("theme", selectedTheme);
+    setTheme(selectedTheme);
   };
 
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
+    document.body.classList.add(`theme-${savedTheme}`);
+  }, []);
 
+  
+
+  
+
+
+  const pages = [
+    {
+      name: "Analytics",
+      path: "/analytics",
+      category: "POPULAR SEARCHES",
+      icon: "bx bx-home-circle"
+    },
+    {
+      name: "DataTable Advanced",
+      path: "/tables-datatables-advanced",
+      category: "TABLES",
+      icon: "bx bx-table"
+    }
+  ];
+
+
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.ctrlKey && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+  
+      if (e.key === "Escape") {
+        setSearchOpen(false);
+      }
+    };
+  
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, []);
+
+  const handleSearch = (value) => {
+    setSearchQuery(value);
+  
+    const filtered = pages.filter((p) =>
+      p.name.toLowerCase().includes(value.toLowerCase())
+    );
+  
+    setResults(filtered);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+  
+      // CTRL + K → open search
+      if (e.ctrlKey && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+  
+      // ESC → close search
+      if (e.key === "Escape") {
+        setSearchOpen(false);
+      }
+  
+    };
+  
+    document.addEventListener("keydown", handleKeyDown);
+  
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+
+  useEffect(() => {
+    if (searchOpen) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+  
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, [searchOpen]);
   
 
 
 
 
   return (
+    
     <nav
       className={`layout-navbar navbar ${
         collapsed ? "sidebar-collapsed" : "sidebar-expanded"
@@ -144,10 +238,14 @@ useEffect(() => {
         {/* Search */}
         <div className="navbar-nav align-items-center">
           <div className="nav-item navbar-search-wrapper mb-0">
-            <a
-              className="nav-item nav-link search-toggler d-flex align-items-center px-0"
-              href="#"
-            >
+          <a
+            className="nav-item nav-link search-toggler d-flex align-items-center px-0"
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setSearchOpen(true);
+            }}
+          >
               <i className="bx bx-search bx-sm text-muted"></i>
               <span className="d-none d-md-inline-block text-muted ms-2">
                 Search [Ctrl+K]
@@ -209,7 +307,15 @@ useEffect(() => {
       setThemeOpen(!themeOpen);
     }}
   >
-    <i className="bx bx-sun bx-sm"></i>
+    <i
+  className={`bx bx-sm ${
+    theme === "dark"
+      ? "bx-moon"
+      : theme === "light"
+      ? "bx-sun"
+      : "bx-laptop"
+  }`}
+></i>
   </a>
   <ul
     className={`dropdown-menu dropdown-menu-end ${
@@ -492,7 +598,101 @@ useEffect(() => {
   </ul>
 </div>
 
+{searchOpen && (
+  <div className="search-modal-overlay">
+    <div className="search-modal">
+
+    <div className="search-header">
+    <i className="bx bx-search"></i>
+
+    <input
+      ref={searchInputRef}
+      type="text"
+      placeholder="Search[Ctrl+K]"
+      value={searchQuery}
+      onChange={(e) => handleSearch(e.target.value)}
+      autoFocus
+    />
+
+    <div className="search-actions">
+      <span className="esc">esc</span>
+
+      <span
+        className="search-close"
+        onClick={() => setSearchOpen(false)}
+      >
+        x
+      </span>
+    </div>
+  </div>
+
+  <div className="search-results">
+
+{/* DEFAULT VIEW */}
+{searchQuery === "" && (
+  <div className="search-default">
+
+    <div className="search-group">
+      <div className="search-group-title">POPULAR SEARCHES</div>
+
+      <Link
+        to="/analytics"
+        className="search-result-item"
+        onClick={() => setSearchOpen(false)}
+      >
+        <i className="bx bx-home-circle"></i>
+        <span>Analytics</span>
+      </Link>
+    </div>
+
+    <div className="search-group">
+      <div className="search-group-title">TABLES</div>
+
+      <Link
+        to="/tables-datatables-advanced"
+        className="search-result-item"
+        onClick={() => setSearchOpen(false)}
+      >
+        <i className="bx bx-table"></i>
+        <span>Advanced</span>
+      </Link>
+    </div>
+
+  </div>
+)}
+
+{/* SEARCH RESULTS */}
+{searchQuery !== "" && results.length === 0 && (
+  <div className="search-empty">
+    No results found
+    <small>Try searching for analytics or tables</small>
+  </div>
+)}
+
+{searchQuery !== "" &&
+  results.map((item, i) => (
+    <Link
+      key={i}
+      to={item.path}
+      className="search-result-item"
+      onClick={() => setSearchOpen(false)}
+    >
+      <i className={item.icon}></i>
+      <div>
+        <div className="search-category">{item.category}</div>
+        <div className="search-name">{item.name}</div>
+      </div>
+    </Link>
+  ))}
+</div>
+
+    </div>
+  </div>
+)}
+
 </nav>
+
+
 
   );
 };
