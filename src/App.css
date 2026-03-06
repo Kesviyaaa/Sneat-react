@@ -320,12 +320,19 @@ td.control:hover::after {
 /* ================= DATATABLE SPACING ================= */
 
 .dataTables_wrapper .row:first-child {
-  margin-bottom: 1.25rem !important;
+  display: flex;
+  justify-content: flex-end; /* move everything to right */
+  align-items: center;
+  gap: 12px;
 }
 
-.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter {
+  float: none !important;
+}
+
 .dataTables_wrapper .dataTables_length {
-  margin-bottom: 0.75rem;
+  order: 1;
 }
 
 .dataTables_wrapper .table-responsive {
@@ -341,6 +348,7 @@ td.control:hover::after {
 
   .dataTables_wrapper .dataTables_filter {
     margin-top: 0.5rem;
+    order: 2;
   }
 }
 
@@ -362,13 +370,13 @@ td.control:hover::after {
 }
 
 .custom-modal-card {
-  width: 420px;
-  max-width: 92%;
+  width: 600px;              /* same width as Sneat modal */
+  max-width: 95%;
   background: #fff;
   border-radius: 0.5rem;
-  padding: 1.5rem;
+  padding: 1.5rem 1.75rem;   /* horizontal padding like Sneat */
   position: relative;
-  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
 }
 
 .custom-close {
@@ -384,25 +392,29 @@ td.control:hover::after {
 .modal-title {
   font-weight: 600;
   margin-bottom: 1rem;
-  font-family: "Public Sans", sans-serif;
+  font-family: "Public Sans", sans-serif;/* Sneat heading color */
 }
 
+
 .details-row {
-  padding: 0.55rem 0;
+  padding: 0.6rem 0;
   border-bottom: 1px solid #eceef1;
   font-size: 0.9rem;
   font-family: "Public Sans", sans-serif;
-}
-
-.details-row:last-child {
-  border-bottom: none;
+  color: #697a8d; /* Sneat grey text */
 }
 
 .details-row span {
   font-weight: 600;
   display: inline-block;
-  width: 110px;
+  width: 200px;  
+  color: #566a7f;  /* aligns labels like Name / Email / City */
 }
+.details-row:last-child {
+  border-bottom: none;
+}
+
+
 
 /* ===================================================== */
 /* ================= STATUS BADGE ====================== */

@@ -163,7 +163,7 @@ const DataTablesAdvanced = () => {
   
         {/* ===== YOUR CARD + TABLE ===== */}
         <div className="card">
-          <h5 className="card-header pb-0">Responsive Datatable</h5>
+          
   
           <div className="card-datatable table-responsive">
           <table
