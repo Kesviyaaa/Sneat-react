@@ -9,6 +9,21 @@ import "datatables.net-responsive";
 import "datatables.net-responsive-bs5";
 import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
 
+import "datatables.net-buttons";
+import "datatables.net-buttons-bs5";
+import "datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css";
+import "datatables.net-buttons/js/buttons.html5";
+import "datatables.net-buttons/js/buttons.colVis";
+
+import JSZip from "jszip";
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+
+import "datatables.net-buttons/js/buttons.colVis";
+
+window.JSZip = JSZip;
+pdfMake.vfs = pdfFonts.vfs;
+
 import "../../App.css";
 
 const DataTablesAdvanced = () => {
@@ -215,11 +230,44 @@ const DataTablesAdvanced = () => {
   
     // 🔥 1. DataTable init
     responsiveDt.current = $(responsiveTableRef.current).DataTable({
-      dom:"<'d-flex justify-content-end align-items-center mb-3 gap-3'lf>rt<'d-flex justify-content-between align-items-center px-3 pb-3'i p>",      processing: true,
-
+      
+      dom:
+"<'row align-items-center px-3'<'col-md-6'B><'col-md-6 d-flex justify-content-end gap-3'l f>>" +
+"t" +
+"<'d-flex justify-content-between align-items-center px-3 pb-3' i p>",
       language: {
         lengthMenu: "Show _MENU_ Entries"
       },
+
+      buttons: [
+        {
+          extend: "copy",
+          className: "btn btn-primary",
+          exportOptions: {
+            columns: ":visible:not(.control):not(:last-child)"
+          }
+        },
+        {
+          extend: "excel",
+          className: "btn btn-primary",
+          exportOptions: {
+            columns: ":visible:not(.control):not(:last-child)"
+          }
+        },
+        {
+          extend: "pdf",
+          className: "btn btn-primary",
+          exportOptions: {
+            columns: ":visible:not(.control):not(:last-child)"
+          }
+        },
+        {
+          extend: "colvis",
+          text: "Customise Columns",
+          className: "btn btn-primary",
+          columns: ":not(.control):not(:last-child)"
+        }
+      ],
   
       responsive: {
         details: {
@@ -256,7 +304,7 @@ const DataTablesAdvanced = () => {
           data: null,
           orderable: false,
           searchable: false,
-          className: "all",
+          className: "not-export",
           render: function (data) {
             return `
               <div class="action-icons">
@@ -267,10 +315,36 @@ const DataTablesAdvanced = () => {
           }
         }
       ],
+      
   
       order: [[1, "asc"]],
-    });
+      initComplete: function () {
+
+        $(".dataTables_info").css({
+          marginLeft: "20px"
+        });
   
+        $(".dataTables_paginate").css({
+          marginRight: "20px",
+          textAlign: "right"
+        });
+  
+        $(".dataTables_wrapper .row:last").css({
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center"
+        });
+  
+      }
+  
+  
+    });
+    
+  
+ 
+    
+
+    
     // ✅ 2. CLICK HANDLER — PUT HERE
     $(responsiveTableRef.current).on("click", "td.control", function () {
       const tr = $(this).closest("tr");
@@ -328,6 +402,8 @@ const DataTablesAdvanced = () => {
       $(responsiveTableRef.current).off("click", ".delete-icon");
       $(responsiveTableRef.current).off("click", ".edit-icon");
     };
+
+    
   }, []);
 
   return (
@@ -342,12 +418,12 @@ const DataTablesAdvanced = () => {
           </div>
           
   
-          <div className="card-datatable table-responsive">
+          <div className="card-datatable table-responsive mt-3" >
           <table
-            ref={responsiveTableRef}
-            className="table table-bordered dataTable dtr-inline "
-            style={{ width: "100%" }}
-          >
+  ref={responsiveTableRef}
+  className="table table-bordered dataTable dtr-inline"
+  style={{ width: "100%", marginTop: "20px" }}
+>
               <thead>
                 <tr>
                   <th></th>

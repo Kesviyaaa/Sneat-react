@@ -1,49 +1,34 @@
-
 <!doctype html>
-<html lang="en" class="light-style">
-    <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>sneat-react</title>
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" /> 
-    <link href="/assets/vendor/fonts/boxicons.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/assets/vendor/css/core.css" />
-    <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" />
-    <link rel="stylesheet" href="/assets/css/demo.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-    <!-- <script src="/assets/vendor/js/menu.js"></script>
-    <script src="/assets/vendor/js/bootstrap.js"></script>  -->
-    <script>
-      window.templateName = "sneat";
-    
-      window.config = {
-        templateName: "sneat",
-        templateConfig: {
-          settings: {
-            theme: "light",
-            layout: "vertical",
-            layoutCollapsed: false,
-            layoutNavbarFixed: true,
-            layoutFooterFixed: false
-          }
-        },
-        colors: {},
-        assetsPath: "/assets/"
-      };
-    
-      window.Helpers = window.Helpers || {};
-    </script>
-    <!-- <script src="/assets/vendor/js/helpers.js"></script>
-    <script src="/assets/js/main.js"></script> -->
-    
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    
+<html lang="en" class="light-style layout-menu-fixed" data-theme="theme-default" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  </body>
+  <title>sneat</title>
+
+  <!-- Boxicons -->
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+
+  <!-- Sneat CSS -->
+  <link rel="stylesheet" href="/assets/vendor/css/core.css" />
+  <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" />
+  <link rel="stylesheet" href="/assets/css/demo.css" />
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div id="root"></div>
+
+  <!-- Sneat helper -->
+  <script src="/assets/vendor/js/helpers.js"></script>
+
+  <!-- React entry -->
+  <script type="module" src="/src/main.jsx"></script>
+
+</body>
 </html>

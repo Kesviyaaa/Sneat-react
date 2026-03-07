@@ -319,12 +319,7 @@ td.control:hover::after {
 
 /* ================= DATATABLE SPACING ================= */
 
-.dataTables_wrapper .row:first-child {
-  display: flex;
-  justify-content: flex-end; /* move everything to right */
-  align-items: center;
-  gap: 12px;
-}
+
 
 .dataTables_wrapper .dataTables_length,
 .dataTables_wrapper .dataTables_filter {
@@ -355,9 +350,7 @@ td.control:hover::after {
 /* ================= MOBILE FIX ================= */
 
 @media (max-width: 768px) {
-  .dataTables_wrapper .row:first-child {
-    margin-bottom: 1.5rem !important;
-  }
+  
 
   .dataTables_wrapper .dataTables_filter {
     order: 2;
@@ -488,12 +481,7 @@ td.control:hover::after {
 
 /* ===== Move BOTH controls to right ===== */
 
-.dataTables_wrapper .row:first-child{
-  padding-right: 16px;
-  padding-left: 16px;
-  display:flex !important;
-  justify-content:flex-end !important;
-}
+
 
 /* Remove bootstrap column behaviour */
 .dataTables_wrapper .row:first-child .col-sm-12.col-md-6{
@@ -517,13 +505,7 @@ td.control:hover::after {
 
 /* ===== FIX DATATABLE TOP CONTROLS POSITION ===== */
 
-.dataTables_wrapper .row:first-child{
-  display:flex !important;
-  justify-content:flex-end !important;
-  align-items:center;
-  gap:16px;
-  padding-right:16px;
-}
+
 
 /* Remove bootstrap column width */
 .dataTables_wrapper .row:first-child > div{
@@ -772,9 +754,7 @@ td.control:hover::after {
 }
 
 /* Bottom spacing under pagination */
-.dataTables_wrapper .row:last-child {
-  padding-bottom: 16px;
-}
+
 
 .custom-modal-card .input-icon i,
 .custom-modal-card .currency-icon{
@@ -851,4 +831,242 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .delete-icon:hover {
   opacity: 0.8;
+}
+
+body {
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+/* ================= DATATABLE EXPORT BUTTONS ================= */
+
+.dt-buttons {
+  display: inline-flex;
+  align-items: center;
+  background: #696cff;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* individual buttons inside the group */
+.dt-buttons .dt-button {
+  background: transparent !important;
+  border: none !important;
+  color: #fff !important;
+  font-size: 14px;
+  padding: 7px 14px;
+  margin: 0;
+  box-shadow: none !important;
+}
+
+/* divider between buttons */
+.dt-buttons .dt-button:not(:last-child) {
+  border-right: 1px solid rgba(255,255,255,0.25) !important;
+}
+
+/* hover effect */
+.dt-buttons .dt-button:hover {
+  background: rgba(255,255,255,0.15) !important;
+}
+
+/* remove DataTables default button styles */
+button.dt-button,
+div.dt-button,
+a.dt-button {
+  background-image: none !important;
+}
+
+/* align buttons with search + entries */
+.dataTables_wrapper .dt-buttons {
+  margin-right: 10px;
+}
+
+/* keep everything in one row */
+
+/* Export button group */
+.dt-buttons .btn {
+  background-color: #696cff !important;
+  border-color: #696cff !important;
+  color: #fff !important;
+  margin-right: 6px;
+  font-size: 14px;
+  padding: 6px 12px;
+}
+
+/* hover */
+.dt-buttons .btn:hover {
+  background-color: #5f63f2 !important;
+  border-color: #5f63f2 !important;
+}
+
+/* remove bootstrap grey style */
+.dt-buttons .btn-secondary {
+  background-color: #696cff !important;
+  border-color: #696cff !important;
+}
+
+/* dropdown icon spacing */
+.dt-buttons .bx {
+  font-size: 16px;
+  vertical-align: middle;
+}
+
+
+
+/* ===== Customise Columns dropdown grid ===== */
+
+div.dt-button-collection .dropdown-menu {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 12px;
+  min-width: 260px;
+}
+
+/* column buttons */
+div.dt-button-collection .dropdown-menu .dt-button {
+  display: block !important;
+  width: 100%;
+  background: #f5f5f9 !important;
+  border: 1px solid #e0e0e6 !important;
+  border-radius: 6px !important;
+  padding: 8px;
+  text-align: center;
+  font-size: 13px;
+  color: #566a7f !important;
+}
+
+/* active column */
+div.dt-button-collection .dropdown-menu .dt-button.active {
+  background: #696cff !important;
+  border-color: #696cff !important;
+  color: #fff !important;
+}
+
+/* hover */
+div.dt-button-collection .dropdown-menu .dt-button:hover {
+  background: #e7e7ff !important;
+}
+
+/* Active column button - full violet */
+.dt-button-collection .dt-button.active,
+.dt-button-collection .dt-button.buttons-columnVisibility.active {
+  background-color: #696cff !important;
+  border-color: #696cff !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+/* remove inner grey effect */
+.dt-button-collection .dt-button:focus,
+.dt-button-collection .dt-button:active {
+  background-color: #696cff !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+/* Top controls layout */
+
+
+/* push length + search to right */
+.dataTables_wrapper .row:first-child .col-md-6:last-child {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: flex-end;
+}
+
+/* remove bootstrap width limits */
+.dataTables_wrapper .row:first-child .col-md-6 {
+  width: auto;
+  flex: none;
+}
+
+.dataTables_length {
+  margin-right: 10px;
+}
+
+/* Space between buttons row and table */
+.dataTables_wrapper .dt-buttons {
+  margin-bottom: 16px;
+}
+
+/* optional: adds spacing for the whole top toolbar */
+
+/* space between datatable toolbar and table */
+.dataTables_wrapper table.dataTable {
+  margin-top: 18px !important;
+}
+
+.dataTables_wrapper .row:nth-child(2) {
+  margin-bottom: 18px !important;
+}
+
+/* Add spacing above the table container */
+.dataTables_wrapper .dataTables_scroll,
+.dataTables_wrapper .dataTables_table_wrapper,
+.dataTables_wrapper table {
+  margin-top: 18px !important;
+}
+
+div.dt-container .row:first-child {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+
+.dataTables_wrapper .row.align-items-center {
+  padding: 0 20px;
+  margin-bottom: 14px;
+}
+
+.dataTables_wrapper .dt-buttons {
+  margin-right: 12px;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+  margin-left: 6px;
+}
+
+.dataTables_wrapper .row:last-child{
+  padding-left:20px;
+  padding-right:20px;
+}
+
+/* Keep pagination aligned to the right */
+.dataTables_wrapper .dataTables_paginate{
+  text-align:right;
+}
+
+/* ===== FINAL PAGINATION ALIGNMENT FIX ===== */
+
+.dataTables_wrapper .row:last-child{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding-left:20px;
+  padding-right:20px;
+}
+
+/* allow left info to size naturally */
+.dataTables_wrapper .row:last-child .col-md-6:first-child{
+  width:auto !important;
+  flex:none !important;
+}
+
+/* push pagination fully right */
+.dataTables_wrapper .row:last-child .col-md-6:last-child{
+  width:auto !important;
+  flex:none !important;
+  margin-left:auto !important;
+}
+
+/* ensure pagination aligns right */
+.dataTables_wrapper .dataTables_paginate{
+  text-align:right;
+}
+
+.dataTables_wrapper .dataTables_info {
+  color: #a1acb8 !important;
+  font-size: 13px;
 }

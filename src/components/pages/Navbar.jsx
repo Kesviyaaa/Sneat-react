@@ -113,22 +113,35 @@ useEffect(() => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleThemeChange = (selectedTheme) => {
-    const body = document.body;
+  const handleThemeChange = (mode) => {
+    const html = document.documentElement;
   
-    body.classList.remove("theme-light", "theme-dark", "theme-system");
-    body.classList.add(`theme-${selectedTheme}`);
+    html.classList.remove("light-style", "dark-style");
   
-    localStorage.setItem("theme", selectedTheme);
-    setTheme(selectedTheme);
+    if (mode === "dark") {
+      html.classList.add("dark-style");
+    } else {
+      html.classList.add("light-style");
+    }
+  
+    localStorage.setItem("theme", mode);
+    setTheme(mode);
   };
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") || "light";
+    const html = document.documentElement;
+  
+    html.classList.remove("light-style", "dark-style");
+  
+    if (savedTheme === "dark") {
+      html.classList.add("dark-style");
+    } else {
+      html.classList.add("light-style");
+    }
+  
     setTheme(savedTheme);
-    document.body.classList.add(`theme-${savedTheme}`);
   }, []);
-
   
 
   
@@ -136,9 +149,9 @@ useEffect(() => {
 
   const pages = [
     {
-      name: "Analytics",
+      name: "Dashboard Analytics",
       path: "/analytics",
-      category: "POPULAR SEARCHES",
+      category: "DASHBOARDS",
       icon: "bx bx-home-circle"
     },
     {

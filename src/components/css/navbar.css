@@ -1,6 +1,10 @@
 /* ===============================
    🔹 NAVBAR BASE
 =============================== */
+
+body {
+  transition: background 0.25s ease, color 0.25s ease;
+}
 .layout-navbar {
   position: fixed;
   top: 12px;

@@ -1,6 +1,10 @@
 /* analytics.css */
 
 /* General Card Styles */
+
+body {
+  transition: background 0.25s ease, color 0.25s ease;
+}
 .card {
     border: 0;
     border-radius: 0.625rem;
