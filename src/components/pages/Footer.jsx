@@ -1,68 +1,57 @@
 import "../../App.css";
 
-
 const Footer = () => {
-    const year = new Date().getFullYear();
-  
-    return (
-      <footer className="content-footer footer bg-footer-theme">
-        <div className="container-xxl">
-          <div className="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
-            
-            <div className="mb-2 mb-md-0">
-              © {new Date().getFullYear()}, made with ❤️ by{" "}
+  const year = new Date().getFullYear();
+
+  return (
+    <>
+      {/* Footer */}
+      <footer className="footer">
+        <div className="container-fluid">
+          <div className="row">
+            {/* Left */}
+            <div className="col-md-4 col-12 footer-color">
+              {year} © All Rights Reserved by Infologia Technologies
+            </div>
+
+            {/* Center */}
+            <div className="col-md-4 col-12 footer-color text-center">
               <a
-                href="https://themeselection.com"
+                href="/Termsandconditions.aspx"
                 target="_blank"
                 rel="noreferrer"
-                className="footer-link "
+                className="footer-link-custom"
               >
-                ThemeSelection
+                Terms & Conditions
+              </a>
+              {" | "}
+              <a
+                href="/privacypolicy.aspx"
+                target="_blank"
+                rel="noreferrer"
+                className="footer-link-custom"
+              >
+                Privacy Policy
               </a>
             </div>
-  
-            <div className="d-none d-lg-inline-block">
+
+            {/* Right */}
+            <div className="col-md-4 col-12 footer-color text-md-end text-center">
+              Design & Developed by{" "}
               <a
-                href="https://themeselection.com/license/"
-                className="footer-link me-4"
+                href="https://infologia.in/"
                 target="_blank"
                 rel="noreferrer"
+                className="footer-link-custom"
               >
-                License
-              </a>
-  
-              <a
-                href="https://themeselection.com"
-                className="footer-link me-4"
-                target="_blank"
-                rel="noreferrer"
-              >
-                More Themes
-              </a>
-  
-              <a
-                href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/documentation/"
-                className="footer-link me-6"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Documentation
-              </a>
-  
-              <a
-                href="https://themeselection.com/support/"
-                className="footer-link d-none d-sm-inline-block"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Support
+                Infologia Technologies
               </a>
             </div>
-  
           </div>
         </div>
       </footer>
-    );
-  };
-  
-  export default Footer;
+    </>
+  );
+};
+
+export default Footer;

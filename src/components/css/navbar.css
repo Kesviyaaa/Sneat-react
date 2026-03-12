@@ -8,8 +8,8 @@ body {
 .layout-navbar {
   position: fixed;
   top: 12px;
-  left: 250px;
-  right: 16px;
+  left: calc(250px + 24px);
+  right: 24px;
   height: 60px;
   background-color: #fff;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -20,7 +20,7 @@ body {
   padding: 0 1rem;
 }
 .layout-wrapper.layout-menu-collapsed .layout-navbar {
-  left: 80px;
+  left: calc(80px + 24px);
 }
 
 /* Top blur strip */
@@ -43,22 +43,34 @@ body {
 
 /* Sidebar expanded */
 .layout-navbar.sidebar-expanded {
-  left: calc(250px + var(--sidebar-gap));
-  width: calc(100% - 250px - var(--sidebar-gap));
+  left: calc(250px + 24px);
+  width: calc(100% - 250px - 48px);
 }
 
 /* Sidebar collapsed */
 .layout-navbar.sidebar-collapsed {
-  left: calc(80px + var(--sidebar-gap));
-  width: calc(100% - 80px - var(--sidebar-gap));
+  left: calc(80px + 24px);
+  width: calc(100% - 80px - 48px);
 }
+
 
 /* Hovered sidebar (collapsed + hover) */
 .layout-navbar.sidebar-hovered {
-  left: calc(250px + var(--sidebar-gap));
-  width: calc(100% - 250px - var(--sidebar-gap));
+  left: calc(250px + 24px);
+  width: calc(100% - 250px - 48px);
 }
 
+
+.layout-wrapper.layout-menu-collapsed .layout-menu.hovered ~ .layout-navbar {
+  left: calc(250px + 24px);
+}
+
+.layout-wrapper.layout-menu-collapsed 
+.layout-menu.hovered + .layout-page 
+.layout-navbar {
+  left: calc(250px + 24px);
+  width: calc(100% - 250px - 48px);
+}
 /* ===============================
    🔹 PAGE CONTENT PADDING
 =============================== */
@@ -158,9 +170,9 @@ body {
    🔹 BUTTONS & BADGES
 =============================== */
 .btn-label-primary {
-  background-color: #696cff;
+  background-color: #50A9E9;
   color: #fff;
-  border: 1px solid #696cff;
+  border: 1px solid #50A9E9;
 }
 .btn-label-primary:hover {
   background-color: #5a5fe7;
@@ -656,11 +668,13 @@ body {
   }
   
   .search-modal{
-  width:520px;
-  background:#fff;
-  border-radius:10px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.2);
-  overflow:hidden;
+    width: 600px;      /* increase width */
+    max-width: 95%;
+    height: 600px;     /* increase height */
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    overflow: hidden;
   }
   
   .search-header{
@@ -686,10 +700,7 @@ body {
   border-radius:4px;
   }
   
-  .search-results{
-  max-height:300px;
-  overflow:auto;
-  }
+  
   
   .search-result-item{
   display:block;
@@ -758,10 +769,7 @@ body {
   z-index: 9999;   /* 🔥 above sidebar */
 }
 
-.search-modal {
-  position: relative;
-  z-index: 10000;
-}
+
 
 /* =========================================
    🔥 FORCE SIDEBAR BEHIND SEARCH MODAL
@@ -790,10 +798,13 @@ body {
 
 .search-modal-card {
   width: 650px;
+  height: 600px;
   background: white;
   border-radius: 10px;
   box-shadow: 0 10px 35px rgba(0,0,0,0.15);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 /* HEADER */
@@ -826,11 +837,11 @@ body {
 
 /* BODY */
 
-.search-body {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: 20px 30px;
-  gap: 30px;
+.search-body{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  padding:20px 30px;
 }
 
 .search-column h6 {
@@ -853,7 +864,7 @@ body {
 }
 
 .search-column li:hover {
-  color: #696cff;
+  color: #50A9E9;
 }
 
 .search-default {
@@ -887,7 +898,7 @@ body {
 
 .search-result-item i {
   font-size: 18px;
-  color: #696cff;
+  color: #50A9E9;
 }
 
 /* No Results State */
@@ -961,4 +972,50 @@ body.theme-dark .dropdown-menu {
     background-color: #1f1f2e;
     color: #e5e7eb;
   }
+}
+
+.two-column-search{
+  display:flex;
+  gap:50px;
+  padding:10px;
+}
+
+.search-column{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+}
+
+.search-group-title{
+  font-size:11px;
+  font-weight:600;
+  color:#a1acb8;
+  margin-bottom:8px;
+  letter-spacing:.5px;
+}
+
+.search-result-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:6px 8px;
+  border-radius:6px;
+  font-size:14px;
+  color:#566a7f;
+  text-decoration:none;
+}
+
+.search-result-item:hover{
+  background:#f5f5f9;
+}
+
+.search-group{
+  display:flex;
+  flex-direction:column;
+}
+/* Freeze background when search modal is open */
+body.no-scroll {
+  overflow: hidden;
+  height: 100vh;
 }

@@ -78,8 +78,11 @@
   
   .sidebar-logo {
     height: 40px;
-    width: auto;
+    width: 180px;
+    object-fit: cover;
   }
+
+  
   
   .app-brand-text {
     font-size: 18px;
@@ -164,7 +167,7 @@
       height: 36px;
       border-radius: 50%;
     
-      background: #696cff;
+      background: #50A9E9;
       color: #fff;
     
       display: flex;
@@ -228,7 +231,7 @@
   .layout-menu-toggle .menu-link {
     width: 28px;
     height: 28px;
-    background: #696cff;
+    background: #50A9E9;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -442,36 +445,36 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: #696cff;
+  background-color: #50A9E9;
   margin-right: 10px;
   display: inline-block;
 }
 
 /* highlight ONLY top-level menu items */
 #layout-menu > .menu-inner > .menu-item.active > .menu-link{
-  background-color: rgba(105,108,255,0.12);
-  color: #696cff;
+  background-color: rgba(80,169,233,0.15);
+  color: #50A9E9;
   border-radius: 6px;
 }
 
 /* icon color */
 #layout-menu > .menu-inner > .menu-item.active > .menu-link .menu-icon{
-  color: #696cff;
+  color: #50A9E9;
 }
 
 
 #layout-menu .menu-item:not(.active) > .menu-link:hover{
-  background-color: rgba(105,108,255,0.08);
+  background-color: rgba(80,169,233,0.08);
 }
 
 /* icon color */
 #layout-menu .menu-item.active > .menu-link .menu-icon{
-  color: #696cff;
+  color: #50A9E9;
 }
 
 /* text color */
 #layout-menu .menu-item.active > .menu-link .menu-text{
-  color: #696cff;
+  color: #50A9E9;
 }
 
 
@@ -482,20 +485,20 @@
    .layout-wrapper.layout-menu-collapsed.menu-hover
    #layout-menu .menu-item.active > .menu-link{
      background-color: rgba(105,108,255,0.16) !important;
-     color: #696cff !important;
+     color: #50A9E9 !important;
      border-radius: 6px;
    }
    
    /* ensure text gets violet color */
    .layout-wrapper.layout-menu-collapsed.menu-hover
    #layout-menu .menu-item.active > .menu-link .menu-text{
-     color: #696cff !important;
+     color: #50A9E9 !important;
    }
    
    /* keep icon violet too */
    .layout-wrapper.layout-menu-collapsed.menu-hover
    #layout-menu .menu-item.active > .menu-link .menu-icon{
-     color: #696cff !important;
+     color: #50A9E9 !important;
    }
 
    /* =========================================
@@ -531,20 +534,20 @@
      display: flex;
      align-items: center;
      width: 100%;
-     background-color: rgba(105,108,255,0.12) !important;
-     color: #696cff !important;
+     background-color: rgba(80,169,233,0.15) !important;
+     color: #50A9E9 !important;
    }
    
    /* keep icon violet */
    .layout-wrapper.layout-menu-collapsed.menu-hover 
    #layout-menu > .menu-inner > .menu-item.active > .menu-link .menu-icon {
-     color: #696cff !important;
+     color: #50A9E9 !important;
    }
    
    /* keep text violet */
    .layout-wrapper.layout-menu-collapsed.menu-hover 
    #layout-menu > .menu-inner > .menu-item.active > .menu-link .menu-text {
-     color: #696cff !important;
+     color: #50A9E9 !important;
    }
 
    .sidebar-menu li {
@@ -563,3 +566,7 @@
   }
 
   
+
+  #layout-menu .menu-item.active > .menu-link::before {
+    background-color: #50A9E9 !important; /* your cargo blue */
+  }

@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./App.css";
@@ -7,8 +12,16 @@ import "./App.css";
 import Navbar from "./components/pages/Navbar";
 import Sidebar from "./components/pages/Sidebar";
 import Footer from "./components/pages/Footer";
-import DataTablesAdvanced from "./components/pages/DataTablesAdvanced";
-import Analytics from "./components/pages/Analytics";
+
+import ParentMenu from "./components/pages/ParentMenu";
+import SubMenu from "./components/pages/SubMenu";
+import Modules from "./components/pages/Modules";
+import Regions from "./components/pages/Regions";
+import Countries from "./components/pages/Countries";
+import Ports from "./components/pages/Ports";
+import Currencies from "./components/pages/Currencies";
+import Commodities from "./components/pages/Commodities";
+import UnitMaster from "./components/pages/UnitMaster";
 
 function App() {
   const [collapsed, setCollapsed] = useState(false);
@@ -37,17 +50,22 @@ function App() {
 
           {/* Main page */}
           <div className="layout-page">
-          <div className="top-blur"></div>
+            <div className="top-blur"></div>
             <Navbar collapsed={collapsed} />
 
             <div className="content-wrapper">
-            <div className="container-fluid flex-grow-1 container-p-y">                <Routes>
+              <div className="container-fluid flex-grow-1 container-p-y">
+                <Routes>
                   <Route path="/" element={<Navigate to="/analytics" />} />
-                  <Route path="/analytics" element={<Analytics />} />
-                  <Route
-                    path="/tables-datatables-advanced"
-                    element={<DataTablesAdvanced />}
-                  />
+                  <Route path="/parent-menu" element={<ParentMenu />} />
+                  <Route path="/sub-menu" element={<SubMenu />} />
+                  <Route path="/modules" element={<Modules />} />
+                  <Route path="/regions" element={<Regions />} />
+                  <Route path="/countries" element={<Countries />} />
+                  <Route path="/ports" element={<Ports />} />
+                  <Route path="/currencies" element={<Currencies />} />
+                  <Route path="/commodities" element={<Commodities />} />
+                  <Route path="/units-of-measurements" element={<UnitMaster />} />             
                 </Routes>
               </div>
 
