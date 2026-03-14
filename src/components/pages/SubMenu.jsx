@@ -131,67 +131,78 @@ const SubMenu = () => {
 
     responsiveDt.current = $(responsiveTableRef.current).DataTable({
       dom:
-        "<'row align-items-center px-3'<'col-md-6'B><'col-md-6 d-flex justify-content-end gap-3'l f>>" +
-        "t" +
-        "<'d-flex justify-content-between align-items-center px-3 pb-3' i p>",
+      "<'row align-items-center px-3'<'col-md-6'B><'col-md-6 d-flex align-items-center justify-content-end gap-3'lf>>" +
+      "t" +
+      "<'d-flex justify-content-between align-items-center px-3 pb-3'ip>",
 
+      scrollY: "350px",
+      scrollCollapse: true,
+      scrollX: false,
+      paging: true,
       language: {
         lengthMenu: "Show _MENU_ Entries",
       },
 
-      buttons: [
-        {
-          extend: "copy",
-          className: "btn btn-primary",
-          exportOptions: {
-            columns: function (idx, data, node) {
-              const table = $(node).closest("table").DataTable();
-      
-              if (idx === 0) return false; // control column
-              if (idx >= table.columns().count() - 2) return false; // edit & delete
-      
-              return table.column(idx).visible();
-            },
+      buttons: {
+        dom: {
+          container: {
+            className: "dt-buttons d-flex gap-2"
           },
+          button: {
+            className: ""
+          }
         },
       
-        {
-          extend: "excel",
-          className: "btn btn-primary",
-          exportOptions: {
-            columns: function (idx, data, node) {
-              const table = $(node).closest("table").DataTable();
+        buttons: [
+          {
+            extend: "collection",
+            text: '<i class="bx bx-export"></i> Export',
+            className: "export-btn rounded",
+            autoClose: true,
+            dropIcon: false,
       
-              if (idx === 0) return false;
-              if (idx >= table.columns().count() - 2) return false;
-      
-              return table.column(idx).visible();
-            },
+            buttons: [
+              {
+                extend: "print",
+                text: '<i class="bx bx-printer"></i> Print',
+                exportOptions: {
+                  columns: ":visible:not(.control):not(:nth-last-child(-n+2))"
+                }
+              },
+              {
+                extend: "copy",
+                text: '<i class="bx bx-copy"></i> Copy',
+                exportOptions: {
+                  columns: ":visible:not(.control):not(:nth-last-child(-n+2))"
+                }
+              },
+              {
+                extend: "excel",
+                text: '<i class="bx bx-spreadsheet"></i> Excel',
+                exportOptions: {
+                  columns: ":visible:not(.control):not(:nth-last-child(-n+2))"
+                }
+              },
+              {
+                extend: "pdf",
+                text: '<i class="bx bx-file"></i> PDF',
+                exportOptions: {
+                  columns: ":visible:not(.control):not(:nth-last-child(-n+2))"
+                }
+              }
+            ]
           },
-        },
       
-        {
-          extend: "pdf",
-          className: "btn btn-primary",
-          exportOptions: {
-            columns: function (idx, data, node) {
-              const table = $(node).closest("table").DataTable();
-      
-              if (idx === 0) return false;
-              if (idx >= table.columns().count() - 2) return false;
-      
-              return table.column(idx).visible();
-            },
-          },
-        },
-      
-        {
-          extend: "colvis",
-          text: "Customise Columns",
-          className: "btn btn-primary",
-          columns: ":not(.control):not(:nth-last-child(-n+2))",
-        },
-      ],
+          {
+            extend: "colvis",
+            text: '<i class="bx bx-columns"></i> Customise Columns',
+            columns: ":not(.control):not(:nth-last-child(-n+2))",
+            className: "custom-colvis",
+            dropIcon: false,
+            autoClose: false
+          }
+        ]
+      },
 
       responsive: {
         details: {
@@ -313,7 +324,7 @@ const SubMenu = () => {
           </button>
         </div>
   
-        <div className="card-datatable table-responsive p-3">
+        <div className="card-datatable p-3">
           <table
             ref={responsiveTableRef}
             className="table dataTable dtr-inline"

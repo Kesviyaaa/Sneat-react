@@ -216,43 +216,79 @@ const Regions = () => {
 
     responsiveDt.current = $(responsiveTableRef.current).DataTable({
       dom:
-        "<'row align-items-center px-3'<'col-md-6'B><'col-md-6 d-flex justify-content-end gap-3'l f>>" +
-        "t" +
-        "<'d-flex justify-content-between align-items-center px-3 pb-3' i p>",
+      "<'row align-items-center px-3'<'col-md-6'B><'col-md-6 d-flex align-items-center justify-content-end gap-3'lf>>" +
+      "t" +
+      "<'d-flex justify-content-between align-items-center px-3 pb-3'ip>",
+
+        scrollY: "350px",
+        scrollCollapse: true,
+        scrollX: false,
+        paging: true,
 
       language: {
         lengthMenu: "Show _MENU_ Entries",
       },
 
-      buttons: [
-        {
-          extend: "copy",
-          className: "btn btn-primary",
-          exportOptions: {
-            columns: ":visible:not(.control):not(:nth-last-child(-n+2))",
+      buttons: {
+        dom: {
+          container: {
+            className: "dt-buttons d-flex gap-2"
           },
+          button: {
+            className: ""
+          }
         },
-        {
-          extend: "excel",
-          className: "btn btn-primary",
-          exportOptions: {
-            columns: ":visible:not(.control):not(:nth-last-child(-n+2))",
+      
+        buttons: [
+          {
+            extend: "collection",
+            text: '<i class="bx bx-export"></i> Export',
+            className: "export-btn rounded",
+            autoClose: true,
+            dropIcon: false,
+      
+            buttons: [
+              {
+                extend: "print",
+                text: '<i class="bx bx-printer"></i> Print',
+                exportOptions: {
+                  columns: ":visible:not(.control):not(.no-export)"
+                }
+              },
+              {
+                extend: "copy",
+                text: '<i class="bx bx-copy"></i> Copy',
+                exportOptions: {
+                  columns: ":visible:not(.control):not(.no-export)"
+                }
+              },
+              {
+                extend: "excel",
+                text: '<i class="bx bx-spreadsheet"></i> Excel',
+                exportOptions: {
+                  columns: ":visible:not(.control):not(.no-export)"
+                }
+              },
+              {
+                extend: "pdf",
+                text: '<i class="bx bx-file"></i> PDF',
+                exportOptions: {
+                  columns: ":visible:not(.control):not(.no-export)"
+                }
+              }
+            ]
           },
-        },
-        {
-          extend: "pdf",
-          className: "btn btn-primary",
-          exportOptions: {
-            columns: ":visible:not(.control):not(:nth-last-child(-n+2))",
-          },
-        },
-        {
-          extend: "colvis",
-          text: "Customise Columns",
-          className: "btn btn-primary",
-          columns: ":not(.control):not(:nth-last-child(-n+2))",
-        },
-      ],
+      
+          {
+            extend: "colvis",
+            text: '<i class="bx bx-columns"></i> Customise Columns',
+            columns: ":not(.control):not(.no-export)",
+            className: "custom-colvis",
+            dropIcon: false,
+            autoClose: false
+          }
+        ]
+      },
 
       responsive: {
         details: {
@@ -294,6 +330,7 @@ const Regions = () => {
 
         {
           data: null,
+          className: "no-export",
           orderable: false,
           searchable: false,
           render: function (data) {
@@ -303,6 +340,7 @@ const Regions = () => {
 
         {
           data: null,
+          className: "no-export",
           orderable: false,
           searchable: false,
           render: function (data) {
@@ -324,20 +362,23 @@ const Regions = () => {
   }
 );
 
-    $(responsiveTableRef.current).on("click", ".edit-icon", function () {
-      const rowData = responsiveDt.current.row($(this).parents("tr")).data();
+$(responsiveTableRef.current).on("click", ".edit-icon", function () {
+  const rowData = responsiveDt.current.row($(this).parents("tr")).data();
 
-      setFormData({
-        portRegion: rowData.portRegion,
-        portName: rowData.portName,
-        country: rowData.country,
-        addAllPorts: rowData.addAllPorts || false,
-        status: rowData.status,
-      });
+  setSelectedRegion(rowData.portRegion);
+  setSelectedCountry(rowData.country);
 
-      setEditingId(rowData._id);
-      setShowAddModal(true);
-    });
+  setFormData({
+    portRegion: rowData.portRegion,
+    portName: rowData.portName,
+    country: rowData.country,
+    addAllPorts: rowData.addAllPorts || false,
+    status: rowData.status,
+  });
+
+  setEditingId(rowData._id);
+  setShowAddModal(true);
+});
   }, []);
 
   return (
@@ -360,7 +401,7 @@ const Regions = () => {
           </button>
         </div>
   
-        <div className="card-datatable table-responsive p-3">
+        <div className="card-datatable p-3">
           <table
             ref={responsiveTableRef}
             className="table dataTable dtr-inline"
@@ -567,13 +608,16 @@ const Regions = () => {
                 onClick={() => {
                   setShowAddModal(false);
                   setEditingId(null);
-                  setFormData({
-                    portRegion: "",
-                    portName: "",
-                    country: "",
-                    addAllPorts: false,
-                    status: false,
-                  });
+                  setSelectedRegion("");
+setSelectedCountry("");
+
+setFormData({
+  portRegion: "",
+  portName: "",
+  country: "",
+  addAllPorts: false,
+  status: false,
+});
                 }}
               >
                 Cancel

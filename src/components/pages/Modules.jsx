@@ -11,6 +11,7 @@ import "datatables.net-buttons";
 import "datatables.net-buttons-bs5";
 import "datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css";
 import "datatables.net-buttons/js/buttons.html5";
+import "datatables.net-buttons/js/buttons.print";
 import "datatables.net-buttons/js/buttons.colVis";
 
 import JSZip from "jszip";
@@ -119,47 +120,89 @@ const Modules = () => {
 
   useEffect(() => {
     if (!responsiveTableRef.current) return;
-    if (responsiveDt.current) return;
-
+  
+    // destroy if already exists
+    if ($.fn.DataTable.isDataTable(responsiveTableRef.current)) {
+      $(responsiveTableRef.current).DataTable().destroy(true);
+      responsiveDt.current = null;
+    }
+  
+    $(".dt-button-collection").remove();
+  
     responsiveDt.current = $(responsiveTableRef.current).DataTable({
       dom:
-        "<'row align-items-center px-3'<'col-md-6'B><'col-md-6 d-flex justify-content-end gap-3'l f>>" +
-        "t" +
-        "<'d-flex justify-content-between align-items-center px-3 pb-3' i p>",
+      "<'row align-items-center px-3'<'col-md-6'B><'col-md-6 d-flex align-items-center justify-content-end gap-3'lf>>" +
+      "t" +
+      "<'d-flex justify-content-between align-items-center px-3 pb-3'ip>",
+
+      scrollY: "350px",
+      scrollCollapse: true,
+      scrollX: false,
+      paging: true,
 
       language: {
         lengthMenu: "Show _MENU_ Entries",
       },
 
-      buttons: [
-        {
-          extend: "copy",
-          className: "btn btn-primary",
-          exportOptions: {
-            columns: ":visible:not(:first-child):not(.no-export)"
+      buttons: {
+        dom: {
+          container: {
+            className: "dt-buttons d-flex gap-2"
+          },
+          button: {
+            className: ""
           }
         },
-        {
-          extend: "excel",
-          className: "btn btn-primary",
-          exportOptions: {
-            columns: ":visible:not(:first-child):not(.no-export)"
+      
+        buttons: [
+          {
+            extend: "collection",
+            text: '<i class="bx bx-export"></i> Export',
+            className: "export-btn rounded",
+            autoClose: true,
+            dropIcon: false,
+            buttons: [
+              {
+                extend: "print",
+                text: '<i class="bx bx-printer"></i> Print',
+                exportOptions: {
+                  columns: ":visible:not(.no-export)"
+                }
+              },
+              {
+                extend: "copy",
+                text: '<i class="bx bx-copy"></i> Copy',
+                exportOptions: {
+                  columns: ":visible:not(.no-export)"
+                }
+              },
+              {
+                extend: "excel",
+                text: '<i class="bx bx-spreadsheet"></i> Excel',
+                exportOptions: {
+                  columns: ":visible:not(.no-export)"
+                }
+              },
+              {
+                extend: "pdf",
+                text: '<i class="bx bx-file"></i> PDF',
+                exportOptions: {
+                  columns: ":visible:not(.no-export)"
+                }
+              }
+            ]
+          },
+      
+          {
+            extend: "colvis",
+            text: '<i class="bx bx-columns"></i> Customise Columns',
+            columns: [1, 2, 3, 4], 
+            className: "custom-colvis",
+            dropIcon: false,
+            autoClose: false
           }
-        },
-        {
-          extend: "pdf",
-          className: "btn btn-primary",
-          exportOptions: {
-            columns: ":visible:not(:first-child):not(.no-export)"
-          }
-        },
-        {
-          extend: "colvis",
-          text: "Customise Columns",
-          className: "btn btn-primary",
-          columns: ":not(:first-child):not(.no-export)"
-        }
-      ],
+        ]
+      },
 
       responsive: {
         details: {
@@ -252,6 +295,12 @@ const Modules = () => {
       setEditingId(rowData._id);
       setShowAddModal(true);
     });
+    return () => {
+      if (responsiveDt.current) {
+        responsiveDt.current.destroy(true);
+        responsiveDt.current = null;
+      }
+    };
   }, []);
 
   const confirmDelete = async () => {
@@ -289,7 +338,7 @@ const Modules = () => {
           </button>
         </div>
   
-        <div className="card-datatable table-responsive p-3">
+        <div className="card-datatable p-3">
           <table
             ref={responsiveTableRef}
             className="table dataTable dtr-inline"

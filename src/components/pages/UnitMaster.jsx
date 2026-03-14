@@ -94,52 +94,82 @@ const handleSubmit = async ()=>{
 useEffect(()=>{
 
 if(dt.current) return;
+$.fn.dataTable.Buttons.defaults.dom.button.className = "export-btn";
+
 
 dt.current=$(tableRef.current).DataTable({
 
-dom:
-"<'row align-items-center px-3 mb-3'<'col-md-6'B><'col-md-6 d-flex justify-content-end gap-3'l f>>"+
-"t"+
-"<'d-flex justify-content-between align-items-center px-3 pb-3' i p>",
+  dom:
+  "<'row align-items-center px-3'<'col-md-6'B><'col-md-6 d-flex align-items-center justify-content-end gap-3'lf>>" +
+  "t" +
+  "<'d-flex justify-content-between align-items-center px-3 pb-3'ip>",
+
+      scrollY: "350px",
+      scrollCollapse: true,
+      scrollX: false,
+      paging: true,
 
 language:{lengthMenu:"Show _MENU_ Entries"},
 
-buttons:[
+buttons: {
+  dom: {
+    container: {
+      className: "dt-buttons d-flex gap-2"
+    }
+  },
 
-{
-extend:"copy",
-className:"btn btn-primary",
-exportOptions:{
-columns:":visible:not(:nth-last-child(-n+2))"
-}
+  buttons: [
+
+    {
+      extend: "collection",
+      text: '<i class="bx bx-export"></i> Export',
+      className: "export-btn",
+      autoClose: true,
+      dropIcon: false,
+
+      buttons: [
+        {
+          extend: "print",
+          text: '<i class="bx bx-printer"></i> Print',
+          exportOptions: {
+            columns: ":visible:not(.no-export)"
+          }
+        },
+        {
+          extend: "copy",
+          text: '<i class="bx bx-copy"></i> Copy',
+          exportOptions: {
+            columns: ":visible:not(.no-export)"
+          }
+        },
+        {
+          extend: "excel",
+          text: '<i class="bx bx-spreadsheet"></i> Excel',
+          exportOptions: {
+            columns: ":visible:not(.no-export)"
+          }
+        },
+        {
+          extend: "pdf",
+          text: '<i class="bx bx-file"></i> PDF',
+          exportOptions: {
+            columns: ":visible:not(.no-export)"
+          }
+        }
+      ]
+    },
+
+    {
+      extend: "colvis",
+      text: '<i class="bx bx-columns"></i> Customise Columns',
+      className: "custom-colvis",
+      columns: ":not(.no-export)",
+      dropIcon: false,
+      autoClose: false
+    }
+
+  ]
 },
-
-{
-extend:"excel",
-className:"btn btn-primary",
-exportOptions:{
-columns:":visible:not(:nth-last-child(-n+2))"
-}
-}
-,
-
-{
-extend:"pdf",
-className:"btn btn-primary",
-exportOptions:{
-columns:":visible:not(:nth-last-child(-n+2))"
-}
-}
-,
-
-{
-extend:"colvis",
-text:"Customise Columns",
-className:"btn btn-primary",
-columns:[0,1,2,3]
-}
-
-],
 
 responsive:true,
 
@@ -159,24 +189,26 @@ columns:[
 {data:"type",responsivePriority:4},
 
 {
-data:null,
-orderable:false,
-render:function(data){
-return `
-<i class="bx bx-edit edit-icon me-2" data-id="${data._id}" style="cursor:pointer;"></i>
-`;
-}
-},
-
-{
-data:null,
-orderable:false,
-render:function(data){
-return `
-<i class="bx bx-trash delete-icon" data-id="${data._id}" style="cursor:pointer;"></i>
-`;
-}
-}
+  data:null,
+  orderable:false,
+  className:"no-export",
+  render:function(data){
+  return `
+  <i class="bx bx-edit edit-icon me-2" data-id="${data._id}" style="cursor:pointer;"></i>
+  `;
+  }
+  },
+  
+  {
+  data:null,
+  orderable:false,
+  className:"no-export",
+  render:function(data){
+  return `
+  <i class="bx bx-trash delete-icon" data-id="${data._id}" style="cursor:pointer;"></i>
+  `;
+  }
+  }
 
 ],
 
@@ -251,11 +283,11 @@ return(
     
     </div>
     
-    <div className="card-datatable table-responsive p-3">
+    <div className="card-datatable p-3">
     
     <table
     ref={tableRef}
-    className="table dataTable dtr-inline"
+    className="table table-hover dataTable dtr-inline"
     style={{width:"100%"}}
     >
     

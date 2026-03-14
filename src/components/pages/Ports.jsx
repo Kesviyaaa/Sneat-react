@@ -8,8 +8,8 @@ import "datatables.net-responsive-bs5";
 import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
 
 import "datatables.net-buttons";
-import "datatables.net-buttons-bs5";
-import "datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css";
+import "datatables.net-buttons-dt/css/buttons.dataTables.min.css";
+import "datatables.net-buttons/js/buttons.print";
 import "datatables.net-buttons/js/buttons.html5";
 import "datatables.net-buttons/js/buttons.colVis";
 
@@ -193,56 +193,79 @@ const Ports = () => {
   useEffect(() => {
     if (!responsiveTableRef.current) return;
     if (responsiveDt.current) return;
+    $.fn.dataTable.Buttons.defaults.dom.button.className = "export-btn";
+
 
     responsiveDt.current = $(responsiveTableRef.current).DataTable({
       dom:
-        "<'row align-items-center px-3'<'col-md-6'B><'col-md-6 d-flex justify-content-end gap-3'l f>>" +
-        "t" +
-        "<'d-flex justify-content-between align-items-center px-3 pb-3' i p>",
+      "<'row align-items-center px-3'<'col-md-6'B><'col-md-6 d-flex align-items-center justify-content-end gap-3'lf>>" +
+      "t" +
+      "<'d-flex justify-content-between align-items-center px-3 pb-3'ip>",
+
+        scrollY: "350px",
+      scrollCollapse: true,
+      scrollX: false,
+      paging: true,
 
       language: { lengthMenu: "Show _MENU_ Entries" },
 
-      buttons: [
-        {
-          extend: "copy",
-          className: "btn btn-primary",
-          exportOptions: {
-            columns: function (idx, data, node) {
-              const table = $(node).closest("table").DataTable();
-              if (idx >= table.columns().count() - 2) return false;
-              return table.column(idx).visible();
-            },
+      buttons: {
+        dom: {
+          container: {
+            className: "dt-buttons d-flex gap-2"
+          }
+        },
+      
+        buttons: [
+          {
+            extend: "collection",
+            text: '<i class="bx bx-export"></i> Export',
+            className: "export-btn",
+            autoClose: true,
+            dropIcon: false,
+      
+            buttons: [
+              {
+                extend: "print",
+                text: '<i class="bx bx-printer"></i> Print',
+                exportOptions: {
+                  columns: ":visible:not(.no-export)"
+                }
+              },
+              {
+                extend: "copy",
+                text: '<i class="bx bx-copy"></i> Copy',
+                exportOptions: {
+                  columns: ":visible:not(.no-export)"
+                }
+              },
+              {
+                extend: "excel",
+                text: '<i class="bx bx-spreadsheet"></i> Excel',
+                exportOptions: {
+                  columns: ":visible:not(.no-export)"
+                }
+              },
+              {
+                extend: "pdf",
+                text: '<i class="bx bx-file"></i> PDF',
+                exportOptions: {
+                  columns: ":visible:not(.no-export)"
+                }
+              }
+            ]
           },
-        },
-        {
-          extend: "excel",
-          className: "btn btn-primary",
-          exportOptions: {
-            columns: function (idx, data, node) {
-              const table = $(node).closest("table").DataTable();
-              if (idx >= table.columns().count() - 2) return false;
-              return table.column(idx).visible();
-            },
-          },
-        },
-        {
-          extend: "pdf",
-          className: "btn btn-primary",
-          exportOptions: {
-            columns: function (idx, data, node) {
-              const table = $(node).closest("table").DataTable();
-              if (idx >= table.columns().count() - 2) return false;
-              return table.column(idx).visible();
-            },
-          },
-        },
-        {
-          extend: "colvis",
-          text: "Customise Columns",
-          className: "btn btn-primary",
-          columns: ":not(:nth-last-child(-n+2))",
-        },
-      ],
+      
+          {
+            extend: "colvis",
+            text: '<i class="bx bx-columns"></i> Customise Columns',
+            columns: ":not(.no-export)",
+            className: "custom-colvis",
+            dropIcon: false,
+            autoClose: false
+          }
+        ]
+      },
 
       responsive: {
         details: {
@@ -275,15 +298,21 @@ const Ports = () => {
 
         {
           data: null,
+          className: "no-export",
+          orderable: false,
+          searchable: false,
           render: function (data) {
-            return `<i class="bx bx-edit edit-icon" data-id="${data._id}"></i>`;
+            return `<i class="bx bx-edit edit-icon" data-id="${data._id}" title="Edit"></i>`;
           },
         },
 
         {
           data: null,
+          className: "no-export",
+          orderable: false,
+          searchable: false,
           render: function (data) {
-            return `<i class="bx bx-trash delete-icon" data-id="${data._id}"></i>`;
+            return `<i class="bx bx-trash delete-icon" data-id="${data._id}" title="Delete"></i>`;
           },
         },
       ],
@@ -361,10 +390,10 @@ const Ports = () => {
           </button>
         </div>
 
-        <div className="card-datatable table-responsive p-3">
+        <div className="card-datatable p-3">
           <table
             ref={responsiveTableRef}
-            className="table table-bordered dataTable dtr-inline"
+            className="table dataTable dtr-inline"
             style={{ width: "100%", marginTop: "20px" }}
           >
             <thead>

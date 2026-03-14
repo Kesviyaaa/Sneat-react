@@ -1,11 +1,8 @@
-import { defineConfig } from "vite"
-import react from "@vitejs/plugin-react"
-import purgeCss from "vite-plugin-purgecss"
+import purgecss from "@fullhuman/postcss-purgecss";
 
-export default defineConfig({
+export default {
   plugins: [
-    react(),
-    purgeCss({
+    purgecss({
       content: [
         "./index.html",
         "./src/**/*.{js,jsx,ts,tsx}"
@@ -15,9 +12,9 @@ export default defineConfig({
         /^dataTables/,
         /^modal/,
         /^dropdown/,
-        "show",
-        "active"
+        "active",
+        "show"
       ]
     })
   ]
-})
+};
